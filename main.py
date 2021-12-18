@@ -5,6 +5,13 @@ dotenv.load_dotenv(dotenv_path=".env")
 class Bot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix=".", intents=discord.Intents.all(), slash_commands=True)
+        
+        self.load_extension("jishaku")
+
+        
+        
+        
+    async def on_ready(self):
         for cog in os.listdir("./cogs"):
             if cog.endswith(".py"):
 
@@ -15,12 +22,6 @@ class Bot(commands.Bot):
                 except Exception as e:
                     print(f"Failed to load {cog}")
                     traceback.print_exc()
-        self.load_extension("jishaku")
-
-        
-        
-        
-    async def on_ready(self):
         
         print("Bot is ready!")
         c = self.get_channel(907937553343209472)

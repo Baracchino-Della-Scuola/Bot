@@ -12,7 +12,16 @@ class Share(commands.Cog):
         self.staff_chat = self.bot.get_channel(907937553343209472)
     
     @commands.command(name="purge")
-    async def purge_all()
+    async def purge_all(self, ctx):
+        if ctx.author in self.bot.get_guild(838727867428765766).get_role(884453174839230464).members:
+            for a in os.listdir("files"):
+                os.remove("files/" + a)
+                await ctx.send("Deleted " + a)
+            await ctx.send("All files have been deleted from the system.")
+            await self.staff_chat.send(f"{ctx.author.mention} has deleted all files from the system.")
+        else:
+            await ctx.send("You do not have permission to use this command.")
+            return
 
     @commands.command(name="share")
     async def share(self, ctx):
