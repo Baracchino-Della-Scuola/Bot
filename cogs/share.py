@@ -11,7 +11,7 @@ class Share(commands.Cog):
         self.bot = bot
         self.staff_chat = self.bot.get_channel(907937553343209472)
     
-    @commands.command(name="purge")
+    @commands.command(name="purge", alias=["clear", "clean", "deleteall"])
     async def purge_all(self, ctx):
         if ctx.author in self.bot.get_guild(838727867428765766).get_role(884453174839230464).members:
             for a in os.listdir("files"):
@@ -23,7 +23,7 @@ class Share(commands.Cog):
             await ctx.send("You do not have permission to use this command.")
             return
 
-    @commands.command(name="share")
+    @commands.command(name="share", alias=["send", "sendfile", "sendfiles", "upload"])
     async def share(self, ctx):
         if len(ctx.message.attachments) == 0:
             await ctx.send("Please attach a file to share.")
@@ -42,7 +42,7 @@ class Share(commands.Cog):
 
         await self.staff_chat.send(f"{ctx.author.mention} has shared a file: {file.filename}.")
     
-    @commands.command(name="download")
+    @commands.command(name="download", alias=["get", "getfile", "getfiles"])
     async def download(self, ctx, filename):
         if not os.path.isfile(f"files/{filename}"):
             await ctx.send("File not found.")
@@ -53,12 +53,12 @@ class Share(commands.Cog):
         await self.staff_chat.send(f"{ctx.author.mention} has downloaded **{filename}**.")
         await ctx.send("File sent in DMs!")
     
-    @commands.command(name="list")
+    @commands.command(name="list", alias=["listfiles", "getfiles"])
     async def list(self, ctx):
         files = os.listdir("./files")
         await ctx.send(f"Files stored with us: {', '.join(files)}")
     
-    @commands.command(name="staff")
+    @commands.command(name="staff", alias=["team", "staffteam"])
     async def staff(self, ctx):
         desc = "Here is a list of staff members:\n"
         for member in self.bot.get_guild(838727867428765766).get_role(884453174839230464).members:
@@ -67,7 +67,7 @@ class Share(commands.Cog):
         emb = discord.Embed(title="Staff", description=desc)
         await ctx.send(embed=emb)
     
-    @commands.command()
+    @commands.command(alias=["del", "remove", "rm"])
     async def delete(self, ctx, filename):
         await ctx.defer(complete_hidden=True)
         if not ctx.author in self.bot.get_guild(838727867428765766).get_role(884453174839230464).members:
@@ -86,7 +86,7 @@ class Share(commands.Cog):
         await c.send(f"File {filename} no longer exists. Say thanks to {ctx.author.mention}!")
         await self.staff_chat.send(f"{ctx.author.mention} has deleted a file: {filename}.")
     
-    @commands.command(name="presence")
+    @commands.command(name="presence", alias=["status"])
     async def presence(self, ctx, *, text):
         if not ctx.author in self.bot.get_guild(838727867428765766).get_role(884453174839230464).members:
             await ctx.send('You are not a staff member of "Il Baracchino Della Scuola".')
@@ -95,7 +95,7 @@ class Share(commands.Cog):
         await self.bot.change_presence(activity=discord.Game(name=text))
         await ctx.send("Presence changed to "+text+'.')
     
-    @commands.command()
+    @commands.command(alias=["reboot"])
     async def restart(self, ctx):
         if not ctx.author in self.bot.get_guild(838727867428765766).get_role(884453174839230464).members:
             await ctx.send('You are not a staff member of "Il Baracchino Della Scuola".')
@@ -104,7 +104,7 @@ class Share(commands.Cog):
         await self.staff_chat.send(f"{ctx.author.mention} has restarted the bot.")
         subprocess.call("python3 main.py", shell=True)
         self.bot.close()
-    @commands.command(name="rename")
+    @commands.command(name="rename", alias=["ren"])
     async def rename(self, ctx, filename, newname):
         if not ctx.author in self.bot.get_guild(838727867428765766).get_role(884453174839230464).members:
             await ctx.send('You are not a staff member of "Il Baracchino Della Scuola".')
