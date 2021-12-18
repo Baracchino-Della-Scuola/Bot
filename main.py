@@ -2,6 +2,7 @@ import discord, os
 from discord.ext import commands
 import traceback
 import dotenv
+import sys
 
 class Bot(commands.Bot):
     def __init__(self):
@@ -19,4 +20,8 @@ class Bot(commands.Bot):
         print(f"I logged in as {bot.user.tag}")
 
 dotenv.load_dotenv(dotenv_path=".env")
-bot.run(os.environ["token"])
+if len(sys.args >= 3):
+    token = sys.args[2]
+else:
+    token = None
+bot.run(token or os.environ["token"])
