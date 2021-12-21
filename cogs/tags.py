@@ -6,7 +6,7 @@ class Tags(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.group(name="tag", aliases=["t", "tags"], invoke_without_command=True)
+    @commands.group(name="tag", aliases=["t", "tags"], invoke_without_command=True, description="List tags")
     async def tag(self, ctx, name=None):
         
 
@@ -29,7 +29,7 @@ class Tags(commands.Cog):
 
         
 
-    @tag.command(name="add", aliases=["create"])
+    @tag.command(name="add", aliases=["create"], description="Create a tag")
     async def add(self, ctx, name, *, content):
         f = open("data/tags.json", "r")
         data = json.load(f)
@@ -40,7 +40,7 @@ class Tags(commands.Cog):
         f.close()
         await ctx.send(f"Tag {name} has been created.")
     
-    @tag.command(name="delete", aliases=["remove"])
+    @tag.command(name="delete", aliases=["remove"], description="Remove a tag")
     async def delete(self, ctx, name):
         f = open("data/tags.json", "r")
         data = json.load(f)
