@@ -160,11 +160,6 @@ class Events(commands.Cog):
             await thread.send(embed=emb)
 
 
-            
-
-
-                traceback.print_exc()
-
 
 def setup(bot):
     bot.add_cog(Events(bot))
