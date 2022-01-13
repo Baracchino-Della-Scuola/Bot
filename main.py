@@ -18,7 +18,7 @@ class Bot(commands.Bot):
 
 
 # Custom ending note
-        ending_note = f"(C) 2021 Il BaracchinoDella Scuola"
+        ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
 
 
         self.help_command = PrettyHelp(menu=menu, ending_note=ending_note)
@@ -41,7 +41,7 @@ class Bot(commands.Bot):
         print("Bot is ready!")
         c = self.get_channel(907937553343209472)
         await c.send("Bot launched! Now you can start copying")
-        await self.change_presence(activity=discord.Game(name=random.choice(["Copy rush 2021", "Games at school", "Destroy the school", "Fake the test", "Copy Rush 2021 at school"])))
+        await self.change_presence(activity=discord.Game(name=random.choice(["Copy rush 2022", "Games at school", "Destroy the school", "Fake the test", "Copy Rush 2022 at school", "Copy rush 2022 in DAD", "#LaScuolaèDAD", "#DADistheway", "DAD > *"])))
 
 
 Bot().run(os.environ["token"])
