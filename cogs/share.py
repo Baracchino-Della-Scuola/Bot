@@ -7,6 +7,7 @@ import subprocess
 import io
 import random
 
+
 class Share(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -103,23 +104,57 @@ class Share(commands.Cog):
             f"{ctx.author.mention} has downloaded **{filename}**."
         )
         await ctx.send("File sent in DMs!")
+
     @commands.command()
-    async def randomize(self, ctx, presence:int=None):
+    async def randomize(self, ctx, presence: int = None):
         if presence:
-            await self.bot.change_presence(activity=discord.Game(name=["Copy rush 2022", "Games at school", "Destroy the school", "Fake the test", "Copy Rush 2022 at school", "Copy rush 2022 in DAD", "#LaScuolaèDAD", "#DADistheway", "DAD > *"][presence]))
+            await self.bot.change_presence(
+                activity=discord.Game(
+                    name=[
+                        "Copy rush 2022",
+                        "Games at school",
+                        "Destroy the school",
+                        "Fake the test",
+                        "Copy Rush 2022 at school",
+                        "Copy rush 2022 in DAD",
+                        "#LaScuolaèDAD",
+                        "#DADistheway",
+                        "DAD > *",
+                    ][presence]
+                )
+            )
             return await ctx.send(":white_check_mark:")
 
-
         await ctx.send(":white_check_mark:")
-        await self.bot.change_presence(activity=discord.Game(name=random.choice(["Copy rush 2022", "Games at school", "Destroy the school", "Fake the test", "Copy Rush 2022 at school", "Copy rush 2022 in DAD", "#LaScuolaèDAD", "#DADistheway", "DAD > *"])))
-    @commands.command(name="list", alias=["listfiles", "getfiles"], description="List all files stored with us")
+        await self.bot.change_presence(
+            activity=discord.Game(
+                name=random.choice(
+                    [
+                        "Copy rush 2022",
+                        "Games at school",
+                        "Destroy the school",
+                        "Fake the test",
+                        "Copy Rush 2022 at school",
+                        "Copy rush 2022 in DAD",
+                        "#LaScuolaèDAD",
+                        "#DADistheway",
+                        "DAD > *",
+                    ]
+                )
+            )
+        )
+
+    @commands.command(
+        name="list",
+        alias=["listfiles", "getfiles"],
+        description="List all files stored with us",
+    )
     async def list(self, ctx):
         f = open("data/files.json", "r")
         data = json.load(f)
         f.close()
         await ctx.send(", ".join(data))
 
-    
     @commands.command(name="staff", alias=["team", "staffteam"])
     async def staff(self, ctx):
         desc = "Here is a list of staff members:\n"

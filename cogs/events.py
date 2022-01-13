@@ -146,19 +146,32 @@ class Events(commands.Cog):
                             )
             except:
                 import traceback
+
                 traceback.print_exc()
-    
+
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.channel.id in [884439873891729418, 930777257239273492, 924987009691418634, 922904176961417257, 884440046294429706, 921009915802288178]:
+        if message.channel.id in [
+            884439873891729418,
+            930777257239273492,
+            924987009691418634,
+            922904176961417257,
+            884440046294429706,
+            921009915802288178,
+        ]:
             await message.add_reaction("\U0001f44d")
             await message.add_reaction("\U0001f44e")
             thread = await message.create_thread(name="Discussione")
-            emb = discord.Embed(title=f"Discussione sul messaggio di {message.author}", description=f"Parla di ciò che ha detto {message.author.mention}")
+            emb = discord.Embed(
+                title=f"Discussione sul messaggio di {message.author}",
+                description=f"Parla di ciò che ha detto {message.author.mention}",
+            )
             emb.color = discord.Color.brand_green()
-            emb.set_author(name=f"{message.author.name}#{message.author.discriminator}", icon_url=message.author.avatar.url)
+            emb.set_author(
+                name=f"{message.author.name}#{message.author.discriminator}",
+                icon_url=message.author.avatar.url,
+            )
             await thread.send(embed=emb)
-
 
 
 def setup(bot):
