@@ -2,10 +2,11 @@ import discord
 from discord.ext import commands
 import json
 
+
 class Events(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         print(payload.emoji.name)
@@ -19,15 +20,22 @@ class Events(commands.Cog):
             await reaction.remove(payload.member)
             user = self.bot.get_user(payload.user_id)
             guild = self.bot.get_guild(payload.guild_id)
-            
+
             overwrites = {
                 guild.default_role: discord.PermissionOverwrite(read_messages=False),
                 user: discord.PermissionOverwrite(
-                    read_messages=True, send_messages=True)
+                    read_messages=True, send_messages=True
+                ),
             }
-            ch = await guild.create_text_channel('ticket-{}'.format(user), overwrites=overwrites)
-            await staff_chat.send(f"{user.mention} has opened a ticket in {ch.mention} <@&884453174839230464>")
-            mes = await ch.send(f"Hi {user.mention}!\n\nYou have opened a ticket.\n\nPlease wait for a staff member to respond. In the meantime explain what is your question.... \nClick 🔒 to close the ticket")
+            ch = await guild.create_text_channel(
+                "ticket-{}".format(user), overwrites=overwrites
+            )
+            await staff_chat.send(
+                f"{user.mention} has opened a ticket in {ch.mention} <@&884453174839230464>"
+            )
+            mes = await ch.send(
+                f"Hi {user.mention}!\n\nYou have opened a ticket.\n\nPlease wait for a staff member to respond. In the meantime explain what is your question.... \nClick 🔒 to close the ticket"
+            )
             await mes.add_reaction("🔒")
             await mes.pin()
             f = open("data/tickets.json", "r")
@@ -50,8 +58,12 @@ class Events(commands.Cog):
                     f = open("data/tickets.json", "w")
                     f.write(json.dumps(data))
                     f.close()
-                    await self.bot.get_channel(907937553343209472).send(f"{self.bot.get_user(a[1]).mention} has closed their ticket.")
-                    await self.bot.get_user(a[1]).send(f"Your ticket has been closed by {self.bot.get_user(payload.user_id).mention}.")
+                    await self.bot.get_channel(907937553343209472).send(
+                        f"{self.bot.get_user(a[1]).mention} has closed their ticket."
+                    )
+                    await self.bot.get_user(a[1]).send(
+                        f"Your ticket has been closed by {self.bot.get_user(payload.user_id).mention}."
+                    )
         elif payload.emoji.name == "✅":
             f = open("data/files.json", "r")
             data = json.load(f)
@@ -83,11 +95,16 @@ class Events(commands.Cog):
                             await message.edit(embed=embed)
                             await message.clear_reactions()
                             guy = self.bot.get_user(int(upload[3]))
-                            await guy.send(f"Your file has been approved by {user.mention}.")
+                            await guy.send(
+                                f"Your file has been approved by {user.mention}."
+                            )
                             c = self.bot.get_channel(int(838728591238758411))
-                            await c.send(f"{self.bot.get_user(int(upload[3]))} has shared a file: {embed.title}. Do `.download {embed.title}` to download it.")
+                            await c.send(
+                                f"{self.bot.get_user(int(upload[3]))} has shared a file: {embed.title}. Do `.download {embed.title}` to download it."
+                            )
             except:
                 import traceback
+
                 traceback.print_exc()
         elif payload.emoji.name == "❌":
             f = open("data/files.json", "r")
@@ -110,7 +127,7 @@ class Events(commands.Cog):
                 print(payload.message_id)
                 if int(upload[1]) == payload.message_id:
                     print("1")
-                    
+
                     print("2")
                     if channel == self.bot.get_channel(907937553343209472):
                         print("3")
@@ -124,7 +141,9 @@ class Events(commands.Cog):
                             await message.edit(embed=embed)
                             await message.clear_reactions()
                             guy = self.bot.get_user(int(upload[3]))
-                            await guy.send(f"Your file has been approved by {user.mention}.")
+                            await guy.send(
+                                f"Your file has been approved by {user.mention}."
+                            )
             except:
                 import traceback
                 traceback.print_exc()
@@ -144,6 +163,7 @@ class Events(commands.Cog):
             
 
 
+                traceback.print_exc()
 
 
 def setup(bot):

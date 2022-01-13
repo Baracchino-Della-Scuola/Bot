@@ -8,24 +8,33 @@ from pretty_help import DefaultMenu, PrettyHelp
 
 
 dotenv.load_dotenv(dotenv_path=".env")
+
+
 class Bot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=".", intents=discord.Intents.all(), slash_commands=True)
-        
-        self.load_extension("jishaku")
-        menu = DefaultMenu(page_left="\U000025c0", page_right="\U000025b6",
-                           remove="\U0001f6d1", active_time=500, )
+        super().__init__(
+            command_prefix=".", intents=discord.Intents.all(), slash_commands=True
+        )
 
+<<<<<<< HEAD
 
 # Custom ending note
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
+=======
+        self.load_extension("jishaku")
+        menu = DefaultMenu(
+            page_left="\U000025c0",
+            page_right="\U000025b6",
+            remove="\U0001f6d1",
+            active_time=500,
+        )
 
+        # Custom ending note
+        ending_note = f"(C) 2021 Il BaracchinoDella Scuola"
+>>>>>>> 86b41b2b96265b5e20450bbf5cfa551e0235eaf3
 
         self.help_command = PrettyHelp(menu=menu, ending_note=ending_note)
 
-        
-        
-        
     async def on_ready(self):
         for cog in os.listdir("./cogs"):
             if cog.endswith(".py"):
@@ -37,7 +46,7 @@ class Bot(commands.Bot):
                 except Exception as e:
                     print(f"Failed to load {cog}")
                     traceback.print_exc()
-        
+
         print("Bot is ready!")
         c = self.get_channel(907937553343209472)
         await c.send("Bot launched! Now you can start copying")
