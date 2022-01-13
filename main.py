@@ -16,22 +16,9 @@ class Bot(commands.Bot):
             command_prefix=".", intents=discord.Intents.all(), slash_commands=True
         )
 
-<<<<<<< HEAD
 
 # Custom ending note
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
-=======
-        self.load_extension("jishaku")
-        menu = DefaultMenu(
-            page_left="\U000025c0",
-            page_right="\U000025b6",
-            remove="\U0001f6d1",
-            active_time=500,
-        )
-
-        # Custom ending note
-        ending_note = f"(C) 2021 Il BaracchinoDella Scuola"
->>>>>>> 86b41b2b96265b5e20450bbf5cfa551e0235eaf3
 
         self.help_command = PrettyHelp(menu=menu, ending_note=ending_note)
 
