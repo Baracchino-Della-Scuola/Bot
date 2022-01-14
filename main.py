@@ -16,7 +16,8 @@ class Bot(commands.Bot):
         super().__init__(
             command_prefix=".",
             intents=discord.Intents.all(),
-            slash_commands=True, help_command=PrettyHelp(),
+            slash_commands=True,
+            help_command=PrettyHelp(),
         )
 
         # Custom ending note
