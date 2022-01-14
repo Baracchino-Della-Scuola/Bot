@@ -16,7 +16,7 @@ class Events(commands.Cog):
         channel = await self.bot.fetch_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
         reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
-        
+
         if payload.user_id == self.bot.user.id:
             return
         if payload.emoji.name == "📩":
@@ -159,12 +159,12 @@ class Events(commands.Cog):
             if message.id == 931505716630536232:
                 member = guild.get_member(user.id)
                 await member.add_roles(guild.get_role(931502468196597793))
-        
+
         elif payload.emoji.name == "🗞️":
             if message.id == 931505716630536232:
                 member = guild.get_member(user.id)
                 await member.add_roles(guild.get_role(931503398807810099))
-    
+
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
         print(payload.emoji.name)
@@ -178,12 +178,11 @@ class Events(commands.Cog):
             if message.id == 931505716630536232:
                 member = guild.get_member(user.id)
                 await member.remove_roles(guild.get_role(931502468196597793))
-        
+
         elif payload.emoji.name == "🗞️":
             if message.id == 931505716630536232:
                 member = guild.get_member(user.id)
                 await member.remove_roles(guild.get_role(931503398807810099))
-
 
     @commands.Cog.listener()
     async def on_message(self, message):
