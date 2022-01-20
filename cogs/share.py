@@ -9,6 +9,7 @@ import random
 import dotenv
 import aiomysql
 
+
 class Share(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -19,22 +20,29 @@ class Share(commands.Cog):
         self.db = os.getenv("DB_NAME")
         self.user = os.getenv("DB_USER")
         self.password = os.getenv("DB_PASSWORD")
-         
+
         self.conection = None
-    
+
     @commands.command()
     @commands.is_owner()
     async def connect(self, ctx):
-        self.connection = await aiomysql.connect(autocommit=True, host=self.host, port=int(self.port),
-                         db=self.db, user=self.user, password=self.password)
-        await ctx.send(f"Connected to {self.host}:{self.port}. Using database {self.db}")
-        
-        
+        self.connection = await aiomysql.connect(
+            autocommit=True,
+            host=self.host,
+            port=int(self.port),
+            db=self.db,
+            user=self.user,
+            password=self.password,
+        )
+        await ctx.send(
+            f"Connected to {self.host}:{self.port}. Using database {self.db}"
+        )
 
     @commands.command(
         name="purge",
         alias=["clear", "clean", "deleteall"],
-        description="Purge all files", hidden=True
+        description="Purge all files",
+        hidden=True,
     )
     async def purge_all(self, ctx):
         if (
@@ -67,16 +75,13 @@ class Share(commands.Cog):
         file = ctx.message.attachments[0]
         c = self.bot.get_channel(int(838728591238758411))
 
-        
         cur = await self.connection.cursor()
-        await cur.execute(f"INSERT into files VALUES ('{file.filename}', '{file.url}',' '{ctx.author.id}')")
-        await self.connection.commit()
-        
-        
-
-        await ctx.send(
-            f"File {file.filename} has been saved in our database!"
+        await cur.execute(
+            f"INSERT into files VALUES ('{file.filename}', '{file.url}',' '{ctx.author.id}')"
         )
+        await self.connection.commit()
+
+        await ctx.send(f"File {file.filename} has been saved in our database!")
 
         await self.staff_chat.send(
             f"{ctx.author.mention} has shared a file: {file.filename}."
@@ -90,9 +95,8 @@ class Share(commands.Cog):
     async def download(self, ctx, filename):
         cur = await self.connection.cursor()
 
-        
         try:
-            await cur.execute("SELECT * from files where name = '"+filename+'\'')
+            await cur.execute("SELECT * from files where name = '" + filename + "'")
             r = await cur.fetchall()
             await ctx.author.send(r[0][1])
 
@@ -159,10 +163,11 @@ class Share(commands.Cog):
         total = ""
         for a in r:
             total += a[0] + "\n"
-        
-        emb = discord.Embed(title="Files", description=total, color=discord.Color.blue())
+
+        emb = discord.Embed(
+            title="Files", description=total, color=discord.Color.blue()
+        )
         await ctx.send(embed=emb)
-            
 
     @commands.command(name="staff", alias=["team", "staffteam"])
     async def staff(self, ctx):

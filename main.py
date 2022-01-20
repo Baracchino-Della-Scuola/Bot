@@ -20,7 +20,6 @@ class Bot(commands.Bot):
         # Custom ending note
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
 
-
     async def on_ready(self):
         self.load_extension("jishaku")
         for cog in os.listdir("./cogs"):
