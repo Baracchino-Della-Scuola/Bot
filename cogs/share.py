@@ -6,17 +6,35 @@ import json
 import subprocess
 import io
 import random
-
+import dotenv
+import aiomysql
 
 class Share(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.staff_chat = self.bot.get_channel(907937553343209472)
+        dotenv.load_dotenv(".env")
+        self.host = os.getenv("DB_HOST")
+        self.port = os.getenv("DB_PORT")
+        self.db = os.getenv("DB_NAME")
+        self.user = os.getenv("DB_USER")
+        self.password = os.getenv("DB_PASSWORD")
+         
+        self.conection = None
+    
+    @commands.command()
+    @commands.is_owner()
+    async def connect(self, ctx):
+        self.connection = await aiomysql.connect(autocommit=True, host=self.host, port=int(self.port),
+                         db=self.db, user=self.user, password=self.password)
+        await ctx.send(f"Connected to {self.host}:{self.port}. Using database {self.db}")
+        
+        
 
     @commands.command(
         name="purge",
         alias=["clear", "clean", "deleteall"],
-        description="Purge all files",
+        description="Purge all files", hidden=True
     )
     async def purge_all(self, ctx):
         if (
@@ -47,34 +65,17 @@ class Share(commands.Cog):
             return
 
         file = ctx.message.attachments[0]
-        f = open("data/files.json", "r")
-
         c = self.bot.get_channel(int(838728591238758411))
-        data = json.loads(f.read())
-        f.close()
-        f = open("data/files.json", "w")
-        emb = discord.Embed(
-            title=file.filename,
-            description=file.url,
-            color=discord.Color.from_rgb(88, 101, 242),
-        )
-        emb.set_author(name=ctx.author.name, icon_url=ctx.author.avatar)
-        emb.set_footer(text=f"File is pending for approval.")
-        m = await self.staff_chat.send(embed=emb)
-        data[f"{file.filename}"] = [
-            f"{file.url}",
-            f"{m.id}",
-            "pending",
-            f"{ctx.author.id}",
-        ]
-        print(data)
 
-        f.write(json.dumps(data))
-        await m.add_reaction("✅")
-        await m.add_reaction("❌")
+        
+        cur = await self.connection.cursor()
+        await cur.execute(f"INSERT into files VALUES ('{file.filename}', '{file.url}',' '{ctx.author.id}')")
+        await self.connection.commit()
+        
+        
 
         await ctx.send(
-            f"File {file.filename} has been saved in our database in pending state!"
+            f"File {file.filename} has been saved in our database!"
         )
 
         await self.staff_chat.send(
@@ -87,13 +88,15 @@ class Share(commands.Cog):
         description="Download a file",
     )
     async def download(self, ctx, filename):
-        f = open("data/files.json", "r")
-        data = json.loads(f.read())
-        f.close()
-        try:
-            await ctx.author.send(data[filename][0])
+        cur = await self.connection.cursor()
 
-        except KeyError:
+        
+        try:
+            await cur.execute("SELECT * from files where name = '"+filename+'\'')
+            r = await cur.fetchall()
+            await ctx.author.send(r[0][1])
+
+        except:
 
             await ctx.send("File not found.")
             await self.staff_chat.send(
@@ -150,10 +153,16 @@ class Share(commands.Cog):
         description="List all files stored with us",
     )
     async def list(self, ctx):
-        f = open("data/files.json", "r")
-        data = json.load(f)
-        f.close()
-        await ctx.send(", ".join(data))
+        cur = await self.connection.cursor()
+        await cur.execute("SELECT * from files")
+        r = await cur.fetchall()
+        total = ""
+        for a in r:
+            total += a[0] + "\n"
+        
+        emb = discord.Embed(title="Files", description=total, color=discord.Color.blue())
+        await ctx.send(embed=emb)
+            
 
     @commands.command(name="staff", alias=["team", "staffteam"])
     async def staff(self, ctx):

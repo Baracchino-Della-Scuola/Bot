@@ -1,1 +1,3 @@
 git+https://github.com/iDevision/enhanced-discord.py
+jishaku
+aiomysql

@@ -5,8 +5,6 @@ from discord.ext import commands
 from pretty_help import DefaultMenu, PrettyHelp
 import asyncio
 
-# ":discord:743511195197374563" is a custom discord emoji format. Adjust to match your own custom emoji.
-
 
 dotenv.load_dotenv(dotenv_path=".env")
 
@@ -14,16 +12,14 @@ dotenv.load_dotenv(dotenv_path=".env")
 class Bot(commands.Bot):
     def __init__(self):
         super().__init__(
-            command_prefix=".",
+            command_prefix=os.environ.get("PREFIX"),
             intents=discord.Intents.all(),
             slash_commands=True,
-            help_command=PrettyHelp(),
         )
 
         # Custom ending note
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
 
-        self.help_command = PrettyHelp()
 
     async def on_ready(self):
         self.load_extension("jishaku")
