@@ -3,6 +3,7 @@ from discord.ext import commands
 import json
 from discord.utils import get
 
+
 class Events(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -80,18 +81,23 @@ class Events(commands.Cog):
             f.close()
             f = open("data/stars.json", "w")
             data = json.loads(data)
-            
+
             starch = self.bot.get_channel(934056385870712862)
             reaction = get(message.reactions, emoji=payload.emoji.name)
             if reaction and reaction.count >= 1:
                 data.append(f"{message.id}")
                 f.write(json.dumps(data))
                 f.close()
-                emb = discord.Embed(title=f"⭐ | {message.author}", description=message.content, color=discord.Color.yellow(), url=f"{message.jump_url}")
-                if len(message.attachments)  > 0:
+                emb = discord.Embed(
+                    title=f"⭐ | {message.author}",
+                    description=message.content,
+                    color=discord.Color.yellow(),
+                    url=f"{message.jump_url}",
+                )
+                if len(message.attachments) > 0:
                     emb.set_thumbnail(url=message.attachments[0].url)
                 emb.set_author(icon_url=message.author.avatar, name=f"{message.author}")
-                
+
                 await starch.send(embed=emb)
 
     @commands.Cog.listener()
