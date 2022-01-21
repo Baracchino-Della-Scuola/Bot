@@ -71,7 +71,7 @@ class Share(commands.Cog):
 
         cur = await self.connection.cursor()
         await cur.execute(
-            f"INSERT into files VALUES ('{file.filename}', '{file.url}',' '{ctx.author.id}')"
+            f"INSERT into files (name, url) VALUES ('{file.filename}', '{file.url}')"
         )
         await self.connection.commit()
 
@@ -176,7 +176,7 @@ class Share(commands.Cog):
 
     @commands.command(alias=["del", "remove", "rm"], descriiption="Delete a file")
     async def delete(self, ctx, filename):
-        await ctx.defer(complete_hidden=True)
+        #await ctx.defer(complete_hidden=True)
         if (
             not ctx.author
             in self.bot.get_guild(838727867428765766)
@@ -187,13 +187,12 @@ class Share(commands.Cog):
                 'You are not a staff member of "Il Baracchino Della Scuola".'
             )
             return
-        if not os.path.isfile(f"files/{filename}"):
-            await ctx.send("File not found.")
-            return
+        
 
         c = self.bot.get_channel(int(838728591238758411))
 
-        os.remove(f"files/{filename}")
+        cur  = await self.bot.connection.cursor()
+        await cur.execute("DELETE FROM files WHERE name = '"+filename+"'")
         await ctx.send(f"File {filename} has been deleted.")
         await c.send(
             f"File {filename} no longer exists. Say thanks to {ctx.author.mention}!"
