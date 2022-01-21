@@ -17,7 +17,7 @@ class Tags(commands.Cog):
     async def tag(self, ctx, name=None):
 
         cur = await self.con.cursor()
-        
+
         tags = ""
         if name is None:
             await cur.execute("SELECT * from tags")
@@ -34,12 +34,11 @@ class Tags(commands.Cog):
             await cur.execute(f"SELECT * from tags WHERE name = '{name}'")
             data = await cur.fetchall()
             for a in data:
-                
-                
+
                 emb = discord.Embed(
-                        title=f"Tag {name}",
-                        description=a[1],
-                        color=discord.Color.brand_green(),
+                    title=f"Tag {name}",
+                    description=a[1],
+                    color=discord.Color.brand_green(),
                 )
                 await ctx.send(embed=emb)
                 return
@@ -49,6 +48,7 @@ class Tags(commands.Cog):
         cur = await self.bot.connection.cursor()
         await cur.execute(f"INSERT into tags VALUES ('{name}', '{content}')")
         await ctx.send(f"Tag {name} has been created.")
+
 
 def setup(bot):
     bot.add_cog(Tags(bot))
