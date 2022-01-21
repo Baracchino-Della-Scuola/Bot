@@ -20,20 +20,14 @@ class Share(commands.Cog):
         self.db = os.getenv("DB_NAME")
         self.user = os.getenv("DB_USER")
         self.password = os.getenv("DB_PASSWORD")
+        self.connection = bot.connection
 
         self.conection = None
 
     @commands.command()
     @commands.is_owner()
     async def connect(self, ctx):
-        self.connection = await aiomysql.connect(
-            autocommit=True,
-            host=self.host,
-            port=int(self.port),
-            db=self.db,
-            user=self.user,
-            password=self.password,
-        )
+        
         await ctx.send(
             f"Connected to {self.host}:{self.port}. Using database {self.db}"
         )

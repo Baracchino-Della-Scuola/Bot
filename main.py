@@ -4,6 +4,7 @@ import random
 from discord.ext import commands
 from pretty_help import DefaultMenu, PrettyHelp
 import asyncio
+import aiomysql
 
 
 dotenv.load_dotenv(dotenv_path=".env")
@@ -21,6 +22,23 @@ class Bot(commands.Bot):
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
 
     async def on_ready(self):
+        self.staff_chat = self.get_channel(907937553343209472)
+        dotenv.load_dotenv(".env")
+        self.host = os.getenv("DB_HOST")
+        self.port = os.getenv("DB_PORT")
+        self.db = os.getenv("DB_NAME")
+        self.user_name = os.getenv("DB_USER")
+        self.password = os.getenv("DB_PASSWORD")
+        self.connection = await aiomysql.connect(
+            autocommit=True,
+            host=self.host,
+            port=int(self.port),
+            db=self.db,
+            user=self.user_name,
+            password=self.password,
+        )
+        print("Connected to MySQL")
+
         self.load_extension("jishaku")
         for cog in os.listdir("./cogs"):
             if cog.endswith(".py"):
