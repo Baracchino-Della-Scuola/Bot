@@ -24,9 +24,6 @@ class Share(commands.Cog):
 
         self.conection = None
 
-    
-
-
     @commands.command(
         name="share",
         alias=["send", "sendfile", "sendfiles", "upload"],
@@ -147,7 +144,7 @@ class Share(commands.Cog):
 
     @commands.command(alias=["del", "remove", "rm"], descriiption="Delete a file")
     async def delete(self, ctx, filename):
-        #await ctx.defer(complete_hidden=True)
+        # await ctx.defer(complete_hidden=True)
         if (
             not ctx.author
             in self.bot.get_guild(838727867428765766)
@@ -158,12 +155,11 @@ class Share(commands.Cog):
                 'You are not a staff member of "Il Baracchino Della Scuola".'
             )
             return
-        
 
         c = self.bot.get_channel(int(838728591238758411))
 
-        cur  = await self.bot.connection.cursor()
-        await cur.execute("DELETE FROM files WHERE name = '"+filename+"'")
+        cur = await self.bot.connection.cursor()
+        await cur.execute("DELETE FROM files WHERE name = '" + filename + "'")
         await ctx.send(f"File {filename} has been deleted.")
         await c.send(
             f"File {filename} no longer exists. Say thanks to {ctx.author.mention}!"
@@ -221,7 +217,6 @@ class Share(commands.Cog):
                 'You are not a staff member of "Il Baracchino Della Scuola".'
             )
             return
-        
 
         c = self.bot.get_channel(int(838728591238758411))
 
