@@ -27,7 +27,7 @@ class Share(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def connect(self, ctx):
-        
+
         await ctx.send(
             f"Connected to {self.host}:{self.port}. Using database {self.db}"
         )

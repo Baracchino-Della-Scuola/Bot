@@ -46,7 +46,9 @@ class Events(commands.Cog):
             await mes.add_reaction("🔒")
             await mes.pin()
             cur = await self.bot.connection.cursor()
-            await cur.execute(f"INSERT into tickets (ch, user) VALUES ('{ch.id}', '{user.id}')")
+            await cur.execute(
+                f"INSERT into tickets (ch, user) VALUES ('{ch.id}', '{user.id}')"
+            )
             await self.bot.connection.commit()
         elif payload.emoji.name == "🔒":
             ch = channel
@@ -54,10 +56,10 @@ class Events(commands.Cog):
             await cur.execute(f"SELECT * from tickets WHERE ch = '{ch.id}'")
             r = await cur.fetchall()
             print(r)
-            try: 
+            try:
                 await self.bot.get_user(int(r[0][1])).send(
-                        f"Your ticket has been closed by {self.bot.get_user(payload.user_id).mention}."
-                    )
+                    f"Your ticket has been closed by {self.bot.get_user(payload.user_id).mention}."
+                )
                 await ch.delete()
             except:
                 print("No ticket found")
