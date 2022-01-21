@@ -24,37 +24,8 @@ class Share(commands.Cog):
 
         self.conection = None
 
-    @commands.command()
-    @commands.is_owner()
-    async def connect(self, ctx):
+    
 
-        await ctx.send(
-            f"Connected to {self.host}:{self.port}. Using database {self.db}"
-        )
-
-    @commands.command(
-        name="purge",
-        alias=["clear", "clean", "deleteall"],
-        description="Purge all files",
-        hidden=True,
-    )
-    async def purge_all(self, ctx):
-        if (
-            ctx.author
-            in self.bot.get_guild(838727867428765766)
-            .get_role(884453174839230464)
-            .members
-        ):
-            for a in os.listdir("files"):
-                os.remove("files/" + a)
-                await ctx.send("Deleted " + a)
-            await ctx.send("All files have been deleted from the system.")
-            await self.staff_chat.send(
-                f"{ctx.author.mention} has deleted all files from the system."
-            )
-        else:
-            await ctx.send("You do not have permission to use this command.")
-            return
 
     @commands.command(
         name="share",
@@ -250,16 +221,15 @@ class Share(commands.Cog):
                 'You are not a staff member of "Il Baracchino Della Scuola".'
             )
             return
-        if not os.path.isfile(f"files/{filename}"):
-            await ctx.send("File not found.")
-            return
+        
 
         c = self.bot.get_channel(int(838728591238758411))
 
-        os.rename(f"files/{filename}", f"files/{newname}")
+        cur = await self.bot.connection.cursor()
+        await cur.execute(f"UPDATE files SET name='{newname}' where name='{filename}'")
         await c.send(f"Now you can download {filename} with .download {newname}")
         await ctx.send(f"File {filename} has been renamed to {newname}.")
-        await self.c.send(f"{ctx.author.mention} renamed {filename} to {newname}.")
+        await c.send(f"{ctx.author.mention} renamed {filename} to {newname}.")
 
 
 def setup(bot):
