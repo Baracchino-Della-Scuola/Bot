@@ -6,35 +6,23 @@ import json
 import subprocess
 import io
 import random
+import dotenv
+import aiomysql
 
 
 class Share(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.staff_chat = self.bot.get_channel(907937553343209472)
+        dotenv.load_dotenv(".env")
+        self.host = os.getenv("DB_HOST")
+        self.port = os.getenv("DB_PORT")
+        self.db = os.getenv("DB_NAME")
+        self.user = os.getenv("DB_USER")
+        self.password = os.getenv("DB_PASSWORD")
+        self.connection = bot.connection
 
-    @commands.command(
-        name="purge",
-        alias=["clear", "clean", "deleteall"],
-        description="Purge all files",
-    )
-    async def purge_all(self, ctx):
-        if (
-            ctx.author
-            in self.bot.get_guild(838727867428765766)
-            .get_role(884453174839230464)
-            .members
-        ):
-            for a in os.listdir("files"):
-                os.remove("files/" + a)
-                await ctx.send("Deleted " + a)
-            await ctx.send("All files have been deleted from the system.")
-            await self.staff_chat.send(
-                f"{ctx.author.mention} has deleted all files from the system."
-            )
-        else:
-            await ctx.send("You do not have permission to use this command.")
-            return
+        self.conection = None
 
     @commands.command(
         name="share",
@@ -47,35 +35,15 @@ class Share(commands.Cog):
             return
 
         file = ctx.message.attachments[0]
-        f = open("data/files.json", "r")
-
         c = self.bot.get_channel(int(838728591238758411))
-        data = json.loads(f.read())
-        f.close()
-        f = open("data/files.json", "w")
-        emb = discord.Embed(
-            title=file.filename,
-            description=file.url,
-            color=discord.Color.from_rgb(88, 101, 242),
-        )
-        emb.set_author(name=ctx.author.name, icon_url=ctx.author.avatar)
-        emb.set_footer(text=f"File is pending for approval.")
-        m = await self.staff_chat.send(embed=emb)
-        data[f"{file.filename}"] = [
-            f"{file.url}",
-            f"{m.id}",
-            "pending",
-            f"{ctx.author.id}",
-        ]
-        print(data)
 
-        f.write(json.dumps(data))
-        await m.add_reaction("✅")
-        await m.add_reaction("❌")
-
-        await ctx.send(
-            f"File {file.filename} has been saved in our database in pending state!"
+        cur = await self.connection.cursor()
+        await cur.execute(
+            f"INSERT into files (name, url) VALUES ('{file.filename}', '{file.url}')"
         )
+        await self.connection.commit()
+
+        await ctx.send(f"File {file.filename} has been saved in our database!")
 
         await self.staff_chat.send(
             f"{ctx.author.mention} has shared a file: {file.filename}."
@@ -87,13 +55,14 @@ class Share(commands.Cog):
         description="Download a file",
     )
     async def download(self, ctx, filename):
-        f = open("data/files.json", "r")
-        data = json.loads(f.read())
-        f.close()
-        try:
-            await ctx.author.send(data[filename][0])
+        cur = await self.connection.cursor()
 
-        except KeyError:
+        try:
+            await cur.execute("SELECT * from files where name = '" + filename + "'")
+            r = await cur.fetchall()
+            await ctx.author.send(r[0][1])
+
+        except:
 
             await ctx.send("File not found.")
             await self.staff_chat.send(
@@ -150,10 +119,17 @@ class Share(commands.Cog):
         description="List all files stored with us",
     )
     async def list(self, ctx):
-        f = open("data/files.json", "r")
-        data = json.load(f)
-        f.close()
-        await ctx.send(", ".join(data))
+        cur = await self.connection.cursor()
+        await cur.execute("SELECT * from files")
+        r = await cur.fetchall()
+        total = ""
+        for a in r:
+            total += a[0] + "\n"
+
+        emb = discord.Embed(
+            title="Files", description=total, color=discord.Color.blue()
+        )
+        await ctx.send(embed=emb)
 
     @commands.command(name="staff", alias=["team", "staffteam"])
     async def staff(self, ctx):
@@ -168,7 +144,7 @@ class Share(commands.Cog):
 
     @commands.command(alias=["del", "remove", "rm"], descriiption="Delete a file")
     async def delete(self, ctx, filename):
-        await ctx.defer(complete_hidden=True)
+        # await ctx.defer(complete_hidden=True)
         if (
             not ctx.author
             in self.bot.get_guild(838727867428765766)
@@ -179,13 +155,11 @@ class Share(commands.Cog):
                 'You are not a staff member of "Il Baracchino Della Scuola".'
             )
             return
-        if not os.path.isfile(f"files/{filename}"):
-            await ctx.send("File not found.")
-            return
 
         c = self.bot.get_channel(int(838728591238758411))
 
-        os.remove(f"files/{filename}")
+        cur = await self.bot.connection.cursor()
+        await cur.execute("DELETE FROM files WHERE name = '" + filename + "'")
         await ctx.send(f"File {filename} has been deleted.")
         await c.send(
             f"File {filename} no longer exists. Say thanks to {ctx.author.mention}!"
@@ -243,16 +217,14 @@ class Share(commands.Cog):
                 'You are not a staff member of "Il Baracchino Della Scuola".'
             )
             return
-        if not os.path.isfile(f"files/{filename}"):
-            await ctx.send("File not found.")
-            return
 
         c = self.bot.get_channel(int(838728591238758411))
 
-        os.rename(f"files/{filename}", f"files/{newname}")
+        cur = await self.bot.connection.cursor()
+        await cur.execute(f"UPDATE files SET name='{newname}' where name='{filename}'")
         await c.send(f"Now you can download {filename} with .download {newname}")
         await ctx.send(f"File {filename} has been renamed to {newname}.")
-        await self.c.send(f"{ctx.author.mention} renamed {filename} to {newname}.")
+        await c.send(f"{ctx.author.mention} renamed {filename} to {newname}.")
 
 
 def setup(bot):

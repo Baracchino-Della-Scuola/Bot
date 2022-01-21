@@ -6,6 +6,7 @@ import json
 class Tags(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.con = bot.connection
 
     @commands.group(
         name="tag",
@@ -15,64 +16,38 @@ class Tags(commands.Cog):
     )
     async def tag(self, ctx, name=None):
 
-        file = open("data/tags.json", "r")
-        data = json.load(file)
-        file.close()
+        cur = await self.con.cursor()
+
         tags = ""
         if name is None:
+            await cur.execute("SELECT * from tags")
+            data = await cur.fetchall()
             for a in data:
                 print(a)
-                tags += "[" + a[2] + "] **" + a[0] + "**: " + "\n"
+                tags += "**" + a[0] + "**: " + "\n"
             emb = discord.Embed(
                 title="Tags", description=tags, color=discord.Color.brand_green()
             )
             await ctx.send(embed=emb)
         else:
+            print("OOOOF")
+            await cur.execute(f"SELECT * from tags WHERE name = '{name}'")
+            data = await cur.fetchall()
             for a in data:
-                if a[0] == name:
-                    emb = discord.Embed(
-                        title=f"Tag {name}",
-                        description=a[1],
-                        color=discord.Color.brand_green(),
-                    )
-                    await ctx.send(embed=emb)
-                    return
+
+                emb = discord.Embed(
+                    title=f"Tag {name}",
+                    description=a[1],
+                    color=discord.Color.brand_green(),
+                )
+                await ctx.send(embed=emb)
+                return
 
     @tag.command(name="add", aliases=["create"], description="Create a tag")
     async def add(self, ctx, name, *, content):
-        f = open("data/tags.json", "r")
-        data = json.load(f)
-        f.close()
-        f = open("data/tags.json", "w")
-        data.append([name, content, ctx.author.mention, f"{ctx.author.id}"])
-        f.write(json.dumps(data))
-        f.close()
+        cur = await self.bot.connection.cursor()
+        await cur.execute(f"INSERT into tags VALUES ('{name}', '{content}')")
         await ctx.send(f"Tag {name} has been created.")
-
-    @tag.command(name="delete", aliases=["remove"], description="Remove a tag")
-    async def delete(self, ctx, name):
-        f = open("data/tags.json", "r")
-        data = json.load(f)
-        f.close()
-        f = open("data/tags.json", "w")
-        for a in data:
-            if a[0] == name:
-                if not a[3] == f"{ctx.author.id}":
-                    if (
-                        not self.bot.get_user(a[3])
-                        in self.bot.get_guild(838727867428765766)
-                        .get_role(884453174839230464)
-                        .members
-                    ):
-                        return await ctx.send(
-                            "You can't delete a tag you didn't create."
-                        )
-                    return await ctx.send("You can't delete a tag you didn't create.")
-                data.remove(a)
-        f.write(json.dumps(data))
-        f.write("[]")
-        f.close()
-        await ctx.send(f"Tag {name} has been deleted.")
 
 
 def setup(bot):
