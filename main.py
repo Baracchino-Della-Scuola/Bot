@@ -11,11 +11,13 @@ dotenv.load_dotenv(dotenv_path=".env")
 
 
 class Bot(commands.Bot):
-    intents = discord.Intents.all()
-    intents.members = True
+    
 
     def __init__(self):
+        intents = discord.Intents.all()
+        intents.members = True
         super().__init__(
+            
             command_prefix=os.environ.get("PREFIX"),
             intents=intents,
             slash_commands=True,
@@ -25,6 +27,8 @@ class Bot(commands.Bot):
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
 
     async def on_ready(self):
+        print("Running. Printing wd")
+        os.system("pwd")
         self.staff_chat = self.get_channel(907937553343209472)
         dotenv.load_dotenv(".env")
         self.host = os.getenv("DB_HOST")
