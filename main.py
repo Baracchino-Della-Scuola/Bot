@@ -11,16 +11,19 @@ dotenv.load_dotenv(dotenv_path=".env")
 
 
 class Bot(commands.Bot):
+    intents = discord.Intents.all()
+    intents.members = True
     def __init__(self):
         super().__init__(
             command_prefix=os.environ.get("PREFIX"),
-            intents=discord.Intents.all(),
+            intents=intents,
             slash_commands=True,
         )
 
         # Custom ending note
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
-
+    
+    
     async def on_ready(self):
         self.staff_chat = self.get_channel(907937553343209472)
         dotenv.load_dotenv(".env")
