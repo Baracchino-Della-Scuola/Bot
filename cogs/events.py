@@ -150,11 +150,25 @@ class Events(commands.Cog):
         emb = discord.Embed(
             title=f"{member} è entrato!",
             description=f'Ciao {member.mention}, qui ci occupiamo di "scuola".',
-            color=member.accent_color,
+            color=discord.Color.brand_green(),
         )
         emb.set_thumbnail(url="https://i.imgur.com/R1KuVAG.png")
         emb.set_author(name=member, icon_url=member.avatar)
-        emb.timestamp = datetime.now
+        emb.timestamp = datetime.now()
+        ch = self.bot.get_channel(838727867428765769)
+        await ch.send(embed=emb)
+
+    @commands.Cog.listener()
+    async def on_member_leave(self, member):
+        print("Uscito")
+        emb = discord.Embed(
+            title=f"{member} è uscito!",
+            description=f"Speriamo che {member.mention} torni.",
+            color=discord.Color.brand_green(),
+        )
+        emb.set_thumbnail(url="https://i.imgur.com/R1KuVAG.png")
+        emb.set_author(name=member, icon_url=member.avatar)
+        emb.timestamp = datetime.now()
         ch = self.bot.get_channel(838727867428765769)
         await ch.send(embed=emb)
 
