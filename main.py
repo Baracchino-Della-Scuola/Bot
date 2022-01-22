@@ -11,10 +11,13 @@ dotenv.load_dotenv(dotenv_path=".env")
 
 
 class Bot(commands.Bot):
+    intents = discord.Intents.all()
+    intents.members = True
+
     def __init__(self):
         super().__init__(
             command_prefix=os.environ.get("PREFIX"),
-            intents=discord.Intents.all(),
+            intents=intents,
             slash_commands=True,
         )
 

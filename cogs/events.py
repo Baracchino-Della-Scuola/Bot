@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 import json
+from discord.utils import get
+from datetime import datetime
 
 
 class Events(commands.Cog):
@@ -72,6 +74,32 @@ class Events(commands.Cog):
             if message.id == 931505716630536232:
                 member = guild.get_member(user.id)
                 await member.add_roles(guild.get_role(931503398807810099))
+        elif payload.emoji.name == "⭐":
+            f = open("data/stars.json", "r")
+            data = f.read()
+            if f"{message.id}" in data:
+                return f.close()
+            f.close()
+            f = open("data/stars.json", "w")
+            data = json.loads(data)
+
+            starch = self.bot.get_channel(934056385870712862)
+            reaction = get(message.reactions, emoji=payload.emoji.name)
+            if reaction and reaction.count >= 1:
+                data.append(f"{message.id}")
+                f.write(json.dumps(data))
+                f.close()
+                emb = discord.Embed(
+                    title=f"⭐ | {message.author}",
+                    description=message.content,
+                    color=discord.Color.yellow(),
+                    url=f"{message.jump_url}",
+                )
+                if len(message.attachments) > 0:
+                    emb.set_thumbnail(url=message.attachments[0].url)
+                emb.set_author(icon_url=message.author.avatar, name=f"{message.author}")
+
+                await starch.send(embed=emb)
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
@@ -115,6 +143,20 @@ class Events(commands.Cog):
                 icon_url=message.author.avatar.url,
             )
             await thread.send(embed=emb)
+
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        print("Entrato")
+        emb = discord.Embed(
+            title=f"{member} è entrato!",
+            description=f'Ciao {member.mention}, qui ci occupiamo di "scuola".',
+            color=member.accent_color,
+        )
+        emb.set_thumbnail(url="https://i.imgur.com/R1KuVAG.png")
+        emb.set_author(name=member, icon_url=member.avatar)
+        emb.timestamp = datetime.now
+        ch = self.bot.get_channel(838727867428765769)
+        await ch.send(embed=emb)
 
 
 def setup(bot):
