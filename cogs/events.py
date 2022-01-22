@@ -4,6 +4,7 @@ import json
 from discord.utils import get
 from datetime import datetime
 
+
 class Events(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -142,17 +143,20 @@ class Events(commands.Cog):
                 icon_url=message.author.avatar.url,
             )
             await thread.send(embed=emb)
-    
+
     @commands.Cog.listener()
     async def on_member_join(self, member):
         print("Entrato")
-        emb = discord.Embed(title=f"{member} è entrato!", description=f"Ciao {member.mention}, qui ci occupiamo di \"scuola\".", color=member.accent_color)
+        emb = discord.Embed(
+            title=f"{member} è entrato!",
+            description=f'Ciao {member.mention}, qui ci occupiamo di "scuola".',
+            color=member.accent_color,
+        )
         emb.set_thumbnail(url="https://i.imgur.com/R1KuVAG.png")
         emb.set_author(name=member, icon_url=member.avatar)
         emb.timestamp = datetime.now
         ch = self.bot.get_channel(838727867428765769)
         await ch.send(embed=emb)
-
 
 
 def setup(bot):
