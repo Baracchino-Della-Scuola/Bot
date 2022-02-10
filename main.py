@@ -5,9 +5,13 @@ from discord.ext import commands
 from pretty_help import DefaultMenu, PrettyHelp
 import asyncio
 import aiomysql
-
+from flask import *
+import server
+import psutil
+import subprocess
 
 dotenv.load_dotenv(dotenv_path=".env")
+
 
 
 class Bot(commands.Bot):
@@ -19,11 +23,14 @@ class Bot(commands.Bot):
             intents=intents,
             slash_commands=True,
         )
-
+        
+        
         # Custom ending note
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
 
     async def on_ready(self):
+        
+
         print("Running. Printing wd")
         os.system("pwd")
         self.staff_chat = self.get_channel(907937553343209472)
@@ -54,7 +61,7 @@ class Bot(commands.Bot):
                 except Exception as e:
                     print(f"Failed to load {cog}")
                     traceback.print_exc()
-
+        
         print("Bot is ready!")
 
         c = self.get_channel(907937553343209472)
@@ -76,6 +83,7 @@ class Bot(commands.Bot):
                 )
             )
         )
+
 
 
 Bot().run(os.environ["token"])

@@ -23,7 +23,17 @@ class Share(commands.Cog):
         self.connection = bot.connection
 
         self.conection = None
+    
 
+    @commands.command()
+    async def settings(self, ctx, key, value):
+        f = open("settings.json", "r")
+        jsonf = json.loads(f.read())
+        f.close()
+        jsonf[key] = value
+        f = open("settings.json", "w")
+        f.write(json.dumps(jsonf))
+        await ctx.send("updated settings")
     @commands.command(
         name="share",
         alias=["send", "sendfile", "sendfiles", "upload"],

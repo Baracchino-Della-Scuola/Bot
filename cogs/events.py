@@ -3,8 +3,9 @@ from discord.ext import commands
 import json
 from discord.utils import get
 from datetime import datetime
-
-
+import requests, random, os
+from io import BytesIO
+import json
 class Events(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -143,10 +144,21 @@ class Events(commands.Cog):
                 icon_url=message.author.avatar.url,
             )
             await thread.send(embed=emb)
+        elif message.channel.is_news():
+            f = open("settings.json")
+            settings = json.load(f)
+            f.close()
+            if settings["autopublishing"] == "True":
+
+                await message.publish()
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
         print("Entrato")
+        backgrounds = ['stars', 'stars2', 'rainbowgradient', 'rainbow', 'sunset', 'night', 'blobday', 'blobnight', 'space', 'gaming1', 'gaming3', 'gaming2', 'gaming4']
+        bgtype = random.randint(1, 7)
+        r = requests.get(f"https://some-random-api.ml/welcome/img/{bgtype}/{random.choice(backgrounds)}?type=join&username={member.name}&discriminator={member.discriminator}&avatar={member.avatar}&guildName=Baracchino%20Della%20Scuola&textcolor=white&memberCount={len(member.guild.members)}&key={os.environ.get('API_KEY')}")
+        
         emb = discord.Embed(
             title=f"{member} è entrato!",
             description=f'Ciao {member.mention}, qui ci occupiamo di "scuola".',
@@ -156,21 +168,30 @@ class Events(commands.Cog):
         emb.set_author(name=member, icon_url=member.avatar)
         emb.timestamp = datetime.now()
         ch = self.bot.get_channel(838727867428765769)
-        await ch.send(embed=emb)
+        image_binary = BytesIO(r.content)
+        await ch.send(file=discord.File(fp=image_binary, filename='image.png')) 
+        #await ch.send(embed=emb)
+        #await ch.send(r.content)
 
     @commands.Cog.listener()
-    async def on_member_leave(self, member):
+    async def on_member_remove(self, member):
         print("Uscito")
+        backgrounds = ['stars', 'stars2', 'rainbowgradient', 'rainbow', 'sunset', 'night', 'blobday', 'blobnight', 'space', 'gaming1', 'gaming3', 'gaming2', 'gaming4']
+        bgtype = random.randint(1, 7)
+        r = requests.get(f"https://some-random-api.ml/welcome/img/{bgtype}/{random.choice(backgrounds)}?type=leave&username={member.name}&discriminator={member.discriminator}&avatar={member.avatar}&guildName=Baracchino%20Della%20Scuola&textcolor=white&memberCount={len(member.guild.members)}&key={os.environ.get('API_KEY')}")
+        
         emb = discord.Embed(
             title=f"{member} è uscito!",
             description=f"Speriamo che {member.mention} torni.",
-            color=discord.Color.brand_green(),
+            color=discord.Color.brand_red(),
         )
         emb.set_thumbnail(url="https://i.imgur.com/R1KuVAG.png")
         emb.set_author(name=member, icon_url=member.avatar)
         emb.timestamp = datetime.now()
+        image_binary = BytesIO(r.content)
         ch = self.bot.get_channel(838727867428765769)
-        await ch.send(embed=emb)
+        await ch.send(file=discord.File(fp=image_binary, filename='image.png')) 
+
 
 
 def setup(bot):
