@@ -63,12 +63,12 @@ class Bot(commands.Bot):
             activity=discord.Game(
                 name=random.choice(
                     [
-                        "Copy rush 2022",
+                        "CopyRush 2022",
                         "Games at school",
                         "Destroy the school",
                         "Fake the test",
-                        "Copy Rush 2022 at school",
-                        "Copy rush 2022 in DAD",
+                        "CopyRush 2022 at school",
+                        "CopyRush 2022 in DAD",
                         "#LaScuolaèDAD",
                         "#DADistheway",
                         "DAD > *",
