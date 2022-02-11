@@ -1,10 +1,12 @@
 import discord
 from discord.ext import commands
-
+import time
 class Moderation(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-        
+        f = open("settings.json")
+        self.settings = json.load(f)
+        f.close()
     @commands.command()
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, user:discord.Member, *, reason=None):
@@ -13,7 +15,7 @@ class Moderation(commands.Cog):
             await user.send(f"😢 | You have been kicked from {ctx.guild.name} for reason {reason}")
         except:
             pass
-        ch = self.bot.get_channel(907937553343209472)
+        ch = self.bot.get_channel(int(os.environ["STAFF_CHAT"]))
         await ch.send(f"{user} has been kicked with reason {reason}")
     
     @commands.command()
@@ -24,7 +26,7 @@ class Moderation(commands.Cog):
             await user.send(f"😢 | You have been banned from {ctx.guild.name} for reason {reason}")
         except:
             pass
-        ch = self.bot.get_channel(907937553343209472)
+        ch = self.bot.get_channel(int(os.environ["STAFF_CHAT"]))
         await ch.send(f"{user} has been banned with reason {reason}")
     
     @commands.command()
@@ -45,6 +47,13 @@ class Moderation(commands.Cog):
             warns += f"Warned by {self.bot.get_user(int(a[2])).mention}. Reason: {a[1]}\n"
         emb = discord.Embed(title=f"{user}'s infractions", description=warns, color=discord.Color.green())
         await ctx.send(embed=emb)
+    @commands.command()
+    async def purge(self, ctx, limit:int=2):
+        
+
+        await ctx.channel.purge(limit=limit+1)
+        time.sleep(1)
+        await ctx.send(f"Deleted {limit} messages", delete_after=2)
 
     
    

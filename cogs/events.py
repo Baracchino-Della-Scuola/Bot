@@ -9,13 +9,16 @@ import json
 class Events(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        f = open("settings.json")
+        self.settings = json.load(f)
+        f.close()
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         print(payload.emoji.name)
         user = self.bot.get_user(payload.user_id)
         guild = self.bot.get_guild(payload.guild_id)
-        staff_chat = self.bot.get_channel(907937553343209472)
+        staff_chat = self.bot.get_channel(int(os.environ["STAFF_CHAT"]))
         channel = await self.bot.fetch_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
         reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
@@ -23,7 +26,7 @@ class Events(commands.Cog):
         if payload.user_id == self.bot.user.id:
             return
         if payload.emoji.name == "📩":
-            staff_chat = self.bot.get_channel(907937553343209472)
+            staff_chat = self.bot.get_channel(int(os.environ["STAFF_CHAT"]))
             channel = await self.bot.fetch_channel(payload.channel_id)
             message = await channel.fetch_message(payload.message_id)
             reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
@@ -80,13 +83,18 @@ class Events(commands.Cog):
             data = f.read()
             if f"{message.id}" in data:
                 return f.close()
+            
+            
             f.close()
+
+            if user.id == message.author.id:
+                return
             f = open("data/stars.json", "w")
             data = json.loads(data)
 
-            starch = self.bot.get_channel(934056385870712862)
+            starch = self.bot.get_channel(int(os.environ.get("STARBOARD")))
             reaction = get(message.reactions, emoji=payload.emoji.name)
-            if reaction and reaction.count >= 1:
+            if reaction and reaction.count >= 2:
                 data.append(f"{message.id}")
                 f.write(json.dumps(data))
                 f.close()
@@ -107,7 +115,7 @@ class Events(commands.Cog):
         print(payload.emoji.name)
         user = self.bot.get_user(payload.user_id)
         guild = self.bot.get_guild(payload.guild_id)
-        staff_chat = self.bot.get_channel(907937553343209472)
+        staff_chat = self.bot.get_channel(int(os.environ.get("STAFF_CHAT")))
         channel = await self.bot.fetch_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
         reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
@@ -123,14 +131,7 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.channel.id in [
-            884439873891729418,
-            930777257239273492,
-            924987009691418634,
-            922904176961417257,
-            884440046294429706,
-            921009915802288178,
-        ]:
+        if message.channel.id in self.settings["discussion_channels"]:
             await message.add_reaction("\U0001f44d")
             await message.add_reaction("\U0001f44e")
             thread = await message.create_thread(name="Discussione")

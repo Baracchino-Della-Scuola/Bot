@@ -4,7 +4,7 @@ from io import *
 import requests
 from typing import *
 from petpetgif import petpet as petpetgif
-import aiohttp, random
+import aiohttp, random, json
 class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -76,6 +76,11 @@ class Misc(commands.Cog):
         await ctx.send(file=discord.File(fp=file_obj, filename="emergency.png"))
     @commands.command(aliases=["porn"])
     async def nsfw(self, ctx):
+        f = open("settings.json", "r")
+        settings = json.load(f)
+        f.close()
+        if settings["porn"] != "True":
+            return await ctx.send("Porn is not enabled!")
         if not ctx.channel.is_nsfw():
             await ctx.send("You cant ask me this in a non-NSFW channel!")
             return

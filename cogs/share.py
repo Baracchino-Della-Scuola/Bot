@@ -13,7 +13,7 @@ import aiomysql
 class Share(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.staff_chat = self.bot.get_channel(907937553343209472)
+        self.staff_chat = self.bot.get_channel(int(os.environ["STAFF_CHAT"]))
         dotenv.load_dotenv(".env")
         self.host = os.getenv("DB_HOST")
         self.port = os.getenv("DB_PORT")
