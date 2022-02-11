@@ -79,6 +79,7 @@ class Bot(commands.Bot):
                         "mario kart sui banchi a rotelle",
                         "scuola in presenza < *",
                         "hacking the school",
+                        "listening to music at school",
                     ]
                 )
             )
