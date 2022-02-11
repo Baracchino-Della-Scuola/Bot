@@ -119,6 +119,7 @@ class Events(commands.Cog):
         channel = await self.bot.fetch_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
         reaction = discord.utils.get(message.reactions, emoji=payload.emoji.name)
+        # Please change this IDs, I dont want to add this in the config env!
         if payload.emoji.name == "📰":
             if message.id == 931505716630536232:
                 member = guild.get_member(user.id)
@@ -158,17 +159,13 @@ class Events(commands.Cog):
         print("Entrato")
         backgrounds = ['stars', 'stars2', 'rainbowgradient', 'rainbow', 'sunset', 'night', 'blobday', 'blobnight', 'space', 'gaming1', 'gaming3', 'gaming2', 'gaming4']
         bgtype = random.randint(1, 7)
+        # Chane in r the guildName as your guild urlencoded name!
         r = requests.get(f"https://some-random-api.ml/welcome/img/{bgtype}/{random.choice(backgrounds)}?type=join&username={member.name}&discriminator={member.discriminator}&avatar={member.avatar}&guildName=Baracchino%20Della%20Scuola&textcolor=white&memberCount={len(member.guild.members)}&key={os.environ.get('API_KEY')}")
         
-        emb = discord.Embed(
-            title=f"{member} è entrato!",
-            description=f'Ciao {member.mention}, qui ci occupiamo di "scuola".',
-            color=discord.Color.brand_green(),
-        )
         emb.set_thumbnail(url="https://i.imgur.com/R1KuVAG.png")
         emb.set_author(name=member, icon_url=member.avatar)
         emb.timestamp = datetime.now()
-        ch = self.bot.get_channel(838727867428765769)
+        ch = self.bot.get_channel(int(os.environ.get("WELCOME_LEAVE")))
         image_binary = BytesIO(r.content)
         await ch.send(file=discord.File(fp=image_binary, filename='image.png')) 
         #await ch.send(embed=emb)
@@ -190,7 +187,7 @@ class Events(commands.Cog):
         emb.set_author(name=member, icon_url=member.avatar)
         emb.timestamp = datetime.now()
         image_binary = BytesIO(r.content)
-        ch = self.bot.get_channel(838727867428765769)
+        ch = self.bot.get_channel(int(os.environ.get("WELCOME_LEAVE")))
         await ch.send(file=discord.File(fp=image_binary, filename='image.png')) 
 
 
