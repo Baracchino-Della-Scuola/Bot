@@ -79,9 +79,7 @@ class Bot(commands.Bot):
                         "#LaScuolaèDAD",
                         "#DADistheway",
                         "DAD > *",
-                        "mario kart sui banchi a rotelle"
-                        "scuola in presenza < *" 
-                       
+                        "mario kart sui banchi a rotelle" "scuola in presenza < *",
                     ]
                 )
             )
