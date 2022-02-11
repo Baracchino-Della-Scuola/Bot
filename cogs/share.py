@@ -23,7 +23,6 @@ class Share(commands.Cog):
         self.connection = bot.connection
 
         self.conection = None
-    
 
     @commands.command()
     async def settings(self, ctx, key, value):
@@ -34,6 +33,7 @@ class Share(commands.Cog):
         f = open("settings.json", "w")
         f.write(json.dumps(jsonf))
         await ctx.send("updated settings")
+
     @commands.command(
         name="share",
         alias=["send", "sendfile", "sendfiles", "upload"],

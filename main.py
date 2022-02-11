@@ -13,7 +13,6 @@ import subprocess
 dotenv.load_dotenv(dotenv_path=".env")
 
 
-
 class Bot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.all()
@@ -23,14 +22,11 @@ class Bot(commands.Bot):
             intents=intents,
             slash_commands=True,
         )
-        
-        
-        
+
         # Custom ending note
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
 
     async def on_ready(self):
-        
 
         print("Running. Printing wd")
         os.system("pwd")
@@ -52,7 +48,7 @@ class Bot(commands.Bot):
         print("Connected to MySQL")
 
         self.load_extension("jishaku")
-        
+
         for cog in os.listdir("./cogs"):
             if cog.endswith(".py"):
 
@@ -87,7 +83,6 @@ class Bot(commands.Bot):
                 )
             )
         )
-
 
 
 Bot().run(os.environ["token"])

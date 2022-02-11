@@ -1,7 +1,9 @@
 import sys
+
 sys.stderr.write("AMOGUS")
 sys.stdout.write("AMOGUS\n")
 import time
+
 time.sleep(2)
 print("a")
 secs = 0
