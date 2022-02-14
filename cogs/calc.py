@@ -7,7 +7,7 @@ class Calculator(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(name="calc")
     async def calc(self, ctx, *math):
         mat = " ".join(math)
         to_remove = ["self", '"', "'", "import", "prototype", "proto"]
