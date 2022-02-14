@@ -5,7 +5,7 @@ import requests
 from typing import *
 from petpetgif import petpet as petpetgif
 import aiohttp, random, json
-
+import random
 
 class Misc(commands.Cog):
     def __init__(self, bot):
@@ -113,7 +113,7 @@ class Misc(commands.Cog):
             color=discord.Color.blue(),
         )
         async with aiohttp.ClientSession() as cs:
-            async with cs.get("https://www.reddit.com/r/nsfw/new.json?sort=hot") as r:
+            async with cs.get(f"https://www.reddit.com/r/{random.choice(['nudes'])}/new.json?sort=hot") as r:
                 res = await r.json()
                 embed.set_image(
                     url=res["data"]["children"][random.randint(0, 25)]["data"]["url"]

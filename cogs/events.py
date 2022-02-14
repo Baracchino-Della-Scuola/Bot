@@ -178,10 +178,11 @@ class Events(commands.Cog):
         r = requests.get(
             f"https://some-random-api.ml/welcome/img/{bgtype}/{random.choice(backgrounds)}?type=join&username={member.name}&discriminator={member.discriminator}&avatar={member.avatar}&guildName=Baracchino%20Della%20Scuola&textcolor=white&memberCount={len(member.guild.members)}&key={os.environ.get('API_KEY')}"
         )
-
+        """
         emb.set_thumbnail(url="https://i.imgur.com/R1KuVAG.png")
         emb.set_author(name=member, icon_url=member.avatar)
         emb.timestamp = datetime.now()
+        """
         ch = self.bot.get_channel(int(os.environ.get("WELCOME_LEAVE")))
         image_binary = BytesIO(r.content)
         await ch.send(file=discord.File(fp=image_binary, filename="image.png"))
