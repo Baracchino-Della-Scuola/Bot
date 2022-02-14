@@ -10,16 +10,18 @@ class Calculator(commands.Cog):
     @commands.command()
     async def calc(self, ctx, *math):
         mat = " ".join(math)
-        to_remove = ["self", '"', "'", "import", "prototype", 'proto']
+        to_remove = ["self", '"', "'", "import", "prototype", "proto"]
         print(dir(self))
         for a in to_remove:
             if a in mat:
                 print(mat + " : " + str(ctx.author))
-                return await ctx.send(f"{ctx.author.mention}, d not use keywoards that may be problematic! The \"\"\"Operation\"\"\" will not solve")
+                return await ctx.send(
+                    f'{ctx.author.mention}, d not use keywoards that may be problematic! The """Operation""" will not solve'
+                )
         print(eval(mat))
         await ctx.send(f"Solution of {mat}: {eval(mat)}")
 
 
 def setup(bot):
-    #bot.add_cog(Calculator(bot))
+    # bot.add_cog(Calculator(bot))
     pass
