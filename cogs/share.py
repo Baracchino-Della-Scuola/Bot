@@ -36,7 +36,7 @@ class Share(commands.Cog):
 
     @commands.command(
         name="share",
-        alias=["send", "sendfile", "sendfiles", "upload"],
+        alias=["send", "sendfile", "sendfiles", "upload", "uploadfile"],
         description="Upload a file",
     )
     async def share(self, ctx):
@@ -74,7 +74,7 @@ class Share(commands.Cog):
 
         except:
 
-            await ctx.send("File not found.")
+            await ctx.send("File not found. Try with a different file")
             await self.staff_chat.send(
                 f"{ctx.author.mention} has attempted to download a file that does not exist."
             )
@@ -90,15 +90,16 @@ class Share(commands.Cog):
             await self.bot.change_presence(
                 activity=discord.Game(
                     name=[
-                        "Copy rush 2022",
+                        "Copyrush 2022",
                         "Games at school",
                         "Destroy the school",
                         "Fake the test",
-                        "Copy Rush 2022 at school",
-                        "Copy rush 2022 in DAD",
+                        "CopyRush 2022 at school",
+                        "Copyrush 2022 in DAD",
                         "#LaScuolaèDAD",
                         "#DADistheway",
                         "DAD > *",
+                        "Mario Kart con i banchi a rotelle",
                     ][presence]
                 )
             )
@@ -109,15 +110,16 @@ class Share(commands.Cog):
             activity=discord.Game(
                 name=random.choice(
                     [
-                        "Copy rush 2022",
+                        "Copyrush 2022",
                         "Games at school",
                         "Destroy the school",
                         "Fake the test",
-                        "Copy Rush 2022 at school",
-                        "Copy rush 2022 in DAD",
+                        "CopyRush 2022 at school",
+                        "Copyrush 2022 in DAD",
                         "#LaScuolaèDAD",
                         "#DADistheway",
                         "DAD > *",
+                        "Mario Kart con i banchi a rotelle",
                     ]
                 )
             )
