@@ -31,7 +31,7 @@ class Calculator(commands.Cog):
         mat = " ".join(math)
 
         if not self.sanitize(mat):
-            return await ctx.send(f'{ctx.author.mention}, do not use keywoards that may be problematic! The """Operation""" will not solve')
+            return await ctx.send(f'{ctx.author.mention}, do not use keywords that may be problematic! The """Operation""" will not solve')
 
         executor = functools.partial(get_math, mat)
         # This avoids blocking long functions which usually causes crashing
