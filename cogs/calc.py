@@ -22,7 +22,7 @@ class Calculator(commands.Cog):
         for a in to_remove:
             if a in mat:
                 return False
-        if re.match(r'[__builtins__]+', mat):
+        if re.match(r"[__builtins__]+", mat):
             return False
         return True
 
@@ -31,7 +31,9 @@ class Calculator(commands.Cog):
         mat = " ".join(math)
 
         if not self.sanitize(mat):
-            return await ctx.send(f'{ctx.author.mention}, do not use keywords that may be problematic! The """Operation""" will not solve')
+            return await ctx.send(
+                f'{ctx.author.mention}, do not use keywords that may be problematic! The """Operation""" will not solve'
+            )
 
         executor = functools.partial(get_math, mat)
         # This avoids blocking long functions which usually causes crashing
