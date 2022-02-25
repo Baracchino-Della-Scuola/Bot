@@ -9,8 +9,7 @@ class Api(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="api", aliases=["key"]
-)
+    @commands.command(name="api", aliases=["key"])
     async def apikey(self, ctx):
         c = await self.bot.connection.cursor()
         await c.execute(f"SELECT * from apikeys WHERE user = {ctx.author.id}")

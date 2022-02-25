@@ -1,4 +1,3 @@
-
 import discord
 from discord.ext import commands
 from io import BytesIO
@@ -8,7 +7,6 @@ from aiogtts import aiogTTS
 import functools
 from tempfile import TemporaryFile
 import io
-
 
 
 class Speech(commands.Cog):

@@ -23,13 +23,13 @@ class Bot(commands.Bot):
             slash_commands=True,
         )
         for a in os.listdir("./cogs"):
-            
-            try:
-               if a.endswith(".py"):
 
-                    self.load_extension("cogs."+a[:-3])
+            try:
+                if a.endswith(".py"):
+
+                    self.load_extension("cogs." + a[:-3])
                     print(f"Loading {a[:-3]}.py")
-                    
+
             except Exception as e:
                 print(f"Unable to load {a}\n{e}")
                 print(traceback.format_exc())
@@ -60,7 +60,6 @@ class Bot(commands.Bot):
 
         self.load_extension("jishaku")
 
-        
         print("Bot is ready!")
 
         c = self.get_channel(907937553343209472)
