@@ -115,7 +115,7 @@ class Misc(commands.Cog):
         )
         async with aiohttp.ClientSession() as cs:
             async with cs.get(
-                f"https://www.reddit.com/r/{random.choice(['nudes'])}/new.json?sort=hot"
+                f"https://www.reddit.com/r/{random.choice(['nudes', 'nsfw'])}/new.json?sort=hot"
             ) as r:
                 res = await r.json()
                 embed.set_image(

@@ -1,4 +1,4 @@
-import speech_recognition as sr
+
 import discord
 from discord.ext import commands
 from io import BytesIO
@@ -9,7 +9,6 @@ import functools
 from tempfile import TemporaryFile
 import io
 
-r = sr.Recognizer()
 
 
 class Speech(commands.Cog):

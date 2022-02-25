@@ -22,6 +22,17 @@ class Bot(commands.Bot):
             intents=intents,
             slash_commands=True,
         )
+        for a in os.listdir("./cogs"):
+            
+            try:
+               if a.endswith(".py"):
+
+                    self.load_extension("cogs."+a[:-3])
+                    print(f"Loading {a[:-3]}.py")
+                    
+            except Exception as e:
+                print(f"Unable to load {a}\n{e}")
+                print(traceback.format_exc())
 
         # Custom ending note
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
@@ -49,16 +60,7 @@ class Bot(commands.Bot):
 
         self.load_extension("jishaku")
 
-        for cog in os.listdir("./cogs"):
-            if cog.endswith(".py"):
-
-                print("Trying to load " + cog)
-                try:
-                    self.load_extension(f"cogs.{cog[:-3]}")
-                    print("Loaded " + cog)
-                except Exception as e:
-                    print(f"Failed to load {cog}")
-                    traceback.print_exc()
+        
         print("Bot is ready!")
 
         c = self.get_channel(907937553343209472)
