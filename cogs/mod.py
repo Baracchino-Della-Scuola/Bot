@@ -52,9 +52,14 @@ class Moderation(commands.Cog):
             
         timeout_until = utcnow() + timedelta(minutes=minutes, seconds=seconds, days=days, hours=hours)
         await user.edit(timeout_until=timeout_until)
-        await user.send(f"U have been muted for {days} days {hours} hours {minutes}minutes {seconds} seconds")
+        await user.send(f"U have been muted for {days} days {hours} hours {minutes} minutes {seconds} seconds")
         await ctx.send(f"{user.mention} muted!")
-
+    
+    @commands.command()
+    @commands.has_permissions(moderate_members=True)
+    async def unmute(self, ctx, user:discord.Member):
+        await user.edit(timeout_until=None)
+        await ctx.send(f"{user} unmuted.")
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
