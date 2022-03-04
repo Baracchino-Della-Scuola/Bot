@@ -202,25 +202,7 @@ class Giveaways(commands.Cog):
             )
         await stop_giveaway(self, message_id, giveaways[message_id])
 
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx: commands.Context, error):
 
-        if isinstance(error, commands.MissingPermissions):
-            return await ctx.send(
-                embed=discord.Embed(
-                    title="Error",
-                    description="You don't have the permission to use this command.",
-                    color=self.color,
-                )
-            )
-        if isinstance(error, commands.MissingRequiredArgument):
-            return await ctx.send(
-                embed=discord.Embed(
-                    title="Error",
-                    description=f"You forgot to provide an argument, please do it like: `{ctx.command.name} {ctx.command.usage}`",
-                    color=self.color,
-                )
-            )
 
 
 def setup(bot):

@@ -1,7 +1,9 @@
 import discord
 from discord.ext import commands
 import time, json, os
-
+from datetime import datetime
+from discord.utils import utcnow
+from datetime import timedelta 
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
@@ -22,6 +24,37 @@ class Moderation(commands.Cog):
             pass
         ch = self.bot.get_channel(int(os.environ["STAFF_CHAT"]))
         await ch.send(f"{user} has been kicked with reason {reason}")
+    @commands.command()
+    @commands.has_permissions(moderate_members=True)
+    async def mute(self, ctx, user:discord.Member, *, args):
+        reason="Muted by " + ctx.author.name
+        data = args.split(" ")
+        print(args)
+        minutes = 0
+        seconds = 0
+        hours = 0
+        days = 0
+        
+        print(data)
+        for a in data:
+            
+            if a.endswith("m"):
+                minutes = int(a[:-1])
+            if  a.endswith("s"):
+                seconds = int(a[:-1])
+            if a.endswith("d"):
+                days = int(a[:-1])
+            if a.endswith("h"):
+                hours = int(a[:-1])
+            
+            
+            
+            
+        timeout_until = utcnow() + timedelta(minutes=minutes, seconds=seconds, days=days, hours=hours)
+        await user.edit(timeout_until=timeout_until)
+        await user.send(f"U have been muted for {days} days {hours} hours {minutes}minutes {seconds} seconds")
+        await ctx.send(f"{user.mention} muted!")
+
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
