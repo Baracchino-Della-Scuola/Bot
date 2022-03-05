@@ -6,13 +6,14 @@ from typing import *
 from petpetgif import petpet as petpetgif
 import aiohttp, random, json
 import random
-
+import pyfiglet
 
 class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(name="pat")
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def pet(self, ctx, image: discord.Member = None):
 
         if type(image) == discord.member.Member:
@@ -29,6 +30,7 @@ class Misc(commands.Cog):
         await ctx.send(file=discord.File(dest, filename=f"{image[0]}-petpet.gif"))
 
     @commands.command()
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def passed(self, ctx, user: discord.User = None):
         if user:
 
@@ -45,6 +47,7 @@ class Misc(commands.Cog):
         await ctx.send(file=discord.File(fp=file_obj, filename="passed.png"))
 
     @commands.command()
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def comunism(self, ctx, user: discord.User = None):
         if user:
 
@@ -61,6 +64,7 @@ class Misc(commands.Cog):
         await ctx.send(file=discord.File(fp=file_obj, filename="comunism.png"))
 
     @commands.command()
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def jail(self, ctx, user: discord.User = None):
         if user:
 
@@ -76,6 +80,7 @@ class Misc(commands.Cog):
         await ctx.send(file=discord.File(fp=file_obj, filename="jail.png"))
 
     @commands.command()
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def rip(self, ctx, user: discord.User = None):
         if user:
 
@@ -89,6 +94,7 @@ class Misc(commands.Cog):
         await ctx.send(file=discord.File(fp=file_obj, filename="rip.png"))
 
     @commands.command()
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def emergency(self, ctx, text):
 
         r = requests.get(
@@ -97,8 +103,34 @@ class Misc(commands.Cog):
 
         file_obj = BytesIO(r.content)
         await ctx.send(file=discord.File(fp=file_obj, filename="emergency.png"))
+    
+    @commands.command()
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
+    async def ascii(self, ctx, *args):
+        print(args)
+        if len(args) == 1:
+            font = "default"
+        else:
+            font = args[1]
+        text = args[0]
+        try:
+            result = pyfiglet.figlet_format(text) if font == "default" else pyfiglet.figlet_format(text, font=font)
+        except Exception as e:
+            if isinstance(e, pyfiglet.FontNotFound):
+                return await ctx.send("Fond not found! Insert another one.") 
+            
+            
+            return
+        print(result)
+        await ctx.send(f"```{result}```")
+    @ascii.error
+    async def ascii_error(self, ctx, error):
+        await ctx.send("File \"<stdin>\", line 1. SyntaxError: invalid syntax")
+
+
 
     @commands.command(aliases=["porn"])
+    @commands.cooldown(rate=1, per=2, type=commands.BucketType.member)
     async def nsfw(self, ctx):
         f = open("settings.json", "r")
         settings = json.load(f)
@@ -125,6 +157,7 @@ class Misc(commands.Cog):
             await cs.close()
 
     @commands.command()
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def gay(self, ctx, user: discord.User = None):
         if user:
 
@@ -140,6 +173,7 @@ class Misc(commands.Cog):
         await ctx.send(file=discord.File(fp=file_obj, filename="lgbtqpro+.png"))
 
     @commands.command()
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def wasted(self, ctx, user: discord.User = None):
         if user:
 
@@ -156,6 +190,7 @@ class Misc(commands.Cog):
         await ctx.send(file=discord.File(fp=file_obj, filename="wasted.png"))
 
     @commands.command()
+    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def triggered(self, ctx, user: discord.User = None):
         if user:
 
