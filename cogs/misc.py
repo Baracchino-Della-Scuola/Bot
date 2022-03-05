@@ -117,15 +117,14 @@ class Misc(commands.Cog):
             result = pyfiglet.figlet_format(text) if font == "default" else pyfiglet.figlet_format(text, font=font)
         except Exception as e:
             if isinstance(e, pyfiglet.FontNotFound):
-                return await ctx.send("Fond not found! Insert another one.") 
+                return await ctx.send("Font not found! Insert another one.") 
             
             
             return
         print(result)
-        await ctx.send(f"```{result}```")
-    @ascii.error
-    async def ascii_error(self, ctx, error):
-        await ctx.send("File \"<stdin>\", line 1. SyntaxError: invalid syntax")
+        char = '\`'
+        await ctx.send(f"```{result.replace('`', char)}```")
+
 
 
 
