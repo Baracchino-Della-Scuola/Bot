@@ -1,10 +1,11 @@
 import discord
 from discord.ext import commands
 
+
 class Errors(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.ConversionError):
@@ -53,7 +54,7 @@ class Errors(commands.Cog):
                 if isinstance(error, commands.MessageNotFound):
                     await ctx.send("What message?")
                 elif isinstance(error, commands.MemberNotFound):
-                     await ctx.send("Member not cached or unexisting")
+                    await ctx.send("Member not cached or unexisting")
                 elif isinstance(error, commands.GuildNotFound):
                     await ctx.send("404 server not found")
                 elif isinstance(error, commands.UserNotFound):
@@ -70,7 +71,6 @@ class Errors(commands.Cog):
                     await ctx.send("I am not invited  to that party!")
                 elif isinstance(error, commands.EmojiNotFound):
 
-
                     await ctx.send("What emoji?")
                 elif isinstance(error, commands.PartialEmojiConversionFailure):
                     await ctx.send("This emoji has too low data")
@@ -79,11 +79,15 @@ class Errors(commands.Cog):
             elif isinstance(error, commands.TooManyArguments):
                 await ctx.send("Too much data, explosion risk 101%")
         elif isinstance(error, commands.CommandOnCooldown):
-            await ctx.send(f"You are too fast! Wait {round(error.retry_after, 2)} seconds")
+            await ctx.send(
+                f"You are too fast! Wait {round(error.retry_after, 2)} seconds"
+            )
         elif isinstance(error, commands.MaxConcurrencyReached):
             await ctx.send("Too much concorrents")
         elif isinstance(error, commands.errors.CommandOnCooldown):
-            await ctx.send(f"You are too fast! Wait {round(error.retry_after, 2)} seconds")
+            await ctx.send(
+                f"You are too fast! Wait {round(error.retry_after, 2)} seconds"
+            )
         elif isinstance(error, commands.MaxConcurrencyReached):
             await ctx.send("Too much concorrents")
         elif isinstance(error, commands.ExtensionError):
@@ -100,6 +104,7 @@ class Errors(commands.Cog):
         elif isinstance(error, commands.CommandRegistrationError):
             print("[COMMANDS] error while registering command.")
         raise error
+
 
 def setup(bot):
     bot.add_cog(Errors(bot))

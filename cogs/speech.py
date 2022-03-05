@@ -34,12 +34,10 @@ class Speech(commands.Cog):
         temp.seek(0)
         f = discord.File(fp=io.BytesIO(temp.read()), filename="tts.mp3")
         await ctx.send(ctx.author.mention, file=f)
-    
+
     @commands.command()
     async def saytts(self, ctx, *, text):
         temp = BytesIO()
-        
-       
 
         tts = await self.tts.save(text, "tts.mp3", lang="it")
         voice_channel = ctx.author.voice.channel
@@ -48,17 +46,22 @@ class Speech(commands.Cog):
         else:
             vc = await voice_channel.connect()
         guild = ctx.guild
-        voice_client: discord.VoiceClient = discord.utils.get(self.bot.voice_clients, guild=guild)
-        
-        #ctx.voice_client.play(source, after=lambda e: print(f"Player error: {e}") if e else None)
-        ffmpeg_options= {'options': '-vn'}
+        voice_client: discord.VoiceClient = discord.utils.get(
+            self.bot.voice_clients, guild=guild
+        )
+
+        # ctx.voice_client.play(source, after=lambda e: print(f"Player error: {e}") if e else None)
+        ffmpeg_options = {"options": "-vn"}
         if not voice_client.is_playing():
-            source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("tts.mp3", **ffmpeg_options))
-           
-            
-            voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
+            source = discord.PCMVolumeTransformer(
+                discord.FFmpegPCMAudio("tts.mp3", **ffmpeg_options)
+            )
+
+            voice_client.play(
+                source, after=lambda e: print("Player error: %s" % e) if e else None
+            )
             while vc.is_playing():
-               await asyncio.sleep(.1)
+                await asyncio.sleep(0.1)
             await vc.disconnect()
 
 

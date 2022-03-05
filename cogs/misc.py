@@ -8,6 +8,7 @@ import aiohttp, random, json
 import random
 import pyfiglet
 
+
 class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -103,7 +104,7 @@ class Misc(commands.Cog):
 
         file_obj = BytesIO(r.content)
         await ctx.send(file=discord.File(fp=file_obj, filename="emergency.png"))
-    
+
     @commands.command()
     @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def ascii(self, ctx, *args):
@@ -114,19 +115,19 @@ class Misc(commands.Cog):
             font = args[1]
         text = args[0]
         try:
-            result = pyfiglet.figlet_format(text) if font == "default" else pyfiglet.figlet_format(text, font=font)
+            result = (
+                pyfiglet.figlet_format(text)
+                if font == "default"
+                else pyfiglet.figlet_format(text, font=font)
+            )
         except Exception as e:
             if isinstance(e, pyfiglet.FontNotFound):
-                return await ctx.send("Font not found! Insert another one.") 
-            
-            
+                return await ctx.send("Font not found! Insert another one.")
+
             return
         print(result)
-        char = '\`'
+        char = "\`"
         await ctx.send(f"```{result.replace('`', char)}```")
-
-
-
 
     @commands.command(aliases=["porn"])
     @commands.cooldown(rate=1, per=2, type=commands.BucketType.member)
