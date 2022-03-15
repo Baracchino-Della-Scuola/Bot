@@ -23,18 +23,7 @@ class Bot(commands.Bot):
             intents=intents,
             slash_commands=True,
         )
-        for a in os.listdir("./cogs"):
-
-            try:
-                if a.endswith(".py"):
-
-                    self.load_extension("cogs." + a[:-3])
-                    print(f"Loading {a[:-3]}.py")
-
-            except Exception as e:
-                print(f"Unable to load {a}\n{e}")
-                print(traceback.format_exc())
-
+        
         # Custom ending note
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
 
@@ -58,6 +47,18 @@ class Bot(commands.Bot):
             password=self.password,
         )
         print("Connected to MySQL")
+        for a in os.listdir("./cogs"):
+
+            try:
+                if a.endswith(".py"):
+
+                    self.load_extension("cogs." + a[:-3])
+                    print(f"Loading {a[:-3]}.py")
+
+            except Exception as e:
+                print(f"Unable to load {a}\n{e}")
+                print(traceback.format_exc())
+
 
         self.load_extension("jishaku")
 
