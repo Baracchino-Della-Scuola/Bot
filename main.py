@@ -23,7 +23,7 @@ class Bot(commands.Bot):
             intents=intents,
             slash_commands=True,
         )
-        
+
         # Custom ending note
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
 
@@ -58,7 +58,6 @@ class Bot(commands.Bot):
             except Exception as e:
                 print(f"Unable to load {a}\n{e}")
                 print(traceback.format_exc())
-
 
         self.load_extension("jishaku")
 
