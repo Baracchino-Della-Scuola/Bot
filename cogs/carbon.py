@@ -5,7 +5,7 @@ from .constants import themes, controls, languages, fonts, escales
 import os
 from pathlib import Path
 from typing import Any
-from pyppeteer import launch
+#from pyppeteer import launch
 from io import *
 import requests
 

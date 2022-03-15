@@ -2,7 +2,7 @@ import discord, urllib, jishaku, os, traceback, dotenv
 from discord.ext import commands
 import random
 from discord.ext import commands
-from pretty_help import DefaultMenu, PrettyHelp
+#from pretty_help import DefaultMenu, PrettyHelp
 import asyncio
 import aiomysql
 from flask import *
