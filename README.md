@@ -7,6 +7,7 @@
 - Tags
 - Welcome
 - Reaction Roles
+- Misc commands
 
 ## Hosting
 - Clone the repo
