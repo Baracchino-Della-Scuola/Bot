@@ -22,8 +22,7 @@ class Calculator(commands.Cog):
         for a in to_remove:
             if a in mat:
                 return False
-        if re.match(r"[__builtins__]+", mat):
-            return False
+        
         return True
 
     @commands.command(name="calc")

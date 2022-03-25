@@ -15,6 +15,14 @@ class Owner(commands.Cog, command_attrs=dict(hidden=True)):
             return "\n".join(content.split("\n")[1:-1])
 
         return content.strip("` \n")
+    
+    @commands.command()
+    @commands.is_owner()
+    async def cogs(self, ctx):
+        
+        emb = discord.Embed(title="Loaded cogs", description=":white_check_mark: :: " + "\n:white_check_mark: :: ".join([x for x in self.bot.extensions]))
+        await ctx.send(embed=emb)
+
 
     @commands.command(hidden=True, name="eval")
     @commands.is_owner()
