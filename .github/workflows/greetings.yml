@@ -1,0 +1,16 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: '👋 Hi, seems like you are a first-time contributor, this is the repository for the Baracchino della scuola official Discord bot. This is under GPLv2 so you can do almost anything you like. See you, GitHub bot.'
+        pr-message: 👋' Hi, seems like you are a first-time contributor, this is the repository for the Baracchino della scuola official Discord bot. This is under GPLv2 so you can do almost anything you like. See you, GitHub bot. Btw, try testing with a linter before submitting chenges'
