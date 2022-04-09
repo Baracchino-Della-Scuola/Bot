@@ -13,4 +13,5 @@ while True:
         time.sleep(2)
         print(f"{secs} seconds pased from the start of the program")
     except:
+        print("Bye")
         exit()
