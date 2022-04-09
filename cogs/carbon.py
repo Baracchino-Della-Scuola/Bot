@@ -75,5 +75,5 @@ class Carbon(commands.Cog):
         await ctx.send(file=discord.File(fp=b, filename="code.png"))
 
 
-def setup(bot):
-    bot.add_cog(Carbon(bot))
+async def setup(bot):
+    await bot.add_cog(Carbon(bot))

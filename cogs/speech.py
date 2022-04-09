@@ -65,5 +65,5 @@ class Speech(commands.Cog):
             await vc.disconnect()
 
 
-def setup(bot):
-    bot.add_cog(Speech(bot))
+async def setup(bot):
+    await bot.add_cog(Speech(bot))

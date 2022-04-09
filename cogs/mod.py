@@ -112,5 +112,5 @@ class Moderation(commands.Cog):
         await ctx.send(f"Deleted {limit} messages", delete_after=2)
 
 
-def setup(bot):
-    bot.add_cog(Moderation(bot))
+async def setup(bot):
+    await bot.add_cog(Moderation(bot))

@@ -50,5 +50,5 @@ class Tags(commands.Cog):
         await ctx.send(f"Tag {name} has been created.")
 
 
-def setup(bot):
-    bot.add_cog(Tags(bot))
+async def setup(bot):
+    await bot.add_cog(Tags(bot))

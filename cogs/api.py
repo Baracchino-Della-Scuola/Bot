@@ -29,5 +29,5 @@ class Api(commands.Cog):
         await ctx.author.send(r[0][1])
 
 
-def setup(bot):
-    bot.add_cog(Api(bot))
+async def setup(bot):
+    await bot.add_cog(Api(bot))

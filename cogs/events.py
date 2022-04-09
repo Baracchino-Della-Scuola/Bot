@@ -225,5 +225,5 @@ class Events(commands.Cog):
         await ch.send(file=discord.File(fp=image_binary, filename="image.png"))
 
 
-def setup(bot):
-    bot.add_cog(Events(bot))
+async def setup(bot):
+    await bot.add_cog(Events(bot))

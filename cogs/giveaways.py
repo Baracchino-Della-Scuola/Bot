@@ -203,5 +203,5 @@ class Giveaways(commands.Cog):
         await stop_giveaway(self, message_id, giveaways[message_id])
 
 
-def setup(bot):
-    bot.add_cog(Giveaways(bot))
+async def setup(bot):
+    awaitbot.add_cog(Giveaways(bot))

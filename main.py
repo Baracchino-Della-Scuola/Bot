@@ -52,14 +52,14 @@ class Bot(commands.Bot):
             try:
                 if a.endswith(".py"):
 
-                    self.load_extension("cogs." + a[:-3])
+                    await self.load_extension("cogs." + a[:-3])
                     print(f"Loading {a[:-3]}.py")
 
             except Exception as e:
                 print(f"Unable to load {a}\n{e}")
                 print(traceback.format_exc())
 
-        self.load_extension("jishaku")
+        await self.load_extension("jishaku")
 
         print("Bot is ready!")
 

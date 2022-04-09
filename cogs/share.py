@@ -239,5 +239,5 @@ class Share(commands.Cog):
         await c.send(f"{ctx.author.mention} renamed {filename} to {newname}.")
 
 
-def setup(bot):
-    bot.add_cog(Share(bot))
+async def setup(bot):
+    await bot.add_cog(Share(bot))

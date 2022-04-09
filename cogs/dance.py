@@ -116,5 +116,5 @@ class Dance(commands.Cog):
         await ctx.send(embed=emb)
 
 
-def setup(bot):
-    bot.add_cog(Dance(bot))
+async def setup(bot):
+    await bot.add_cog(Dance(bot))
