@@ -14,7 +14,7 @@ class Misc(commands.Cog):
         self.bot = bot
 
     @commands.command(name="pat", aliases=["pet"])
-    @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
+    @commands.cooldown(rate=2, per=5, type=commands.BucketType.member)
     async def pet(self, ctx, image: discord.Member = None):
 
         if type(image) == discord.member.Member:
