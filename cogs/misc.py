@@ -13,7 +13,7 @@ class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="pat")
+    @commands.command(name="pat", aliases=["pet"])
     @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def pet(self, ctx, image: discord.Member = None):
 
