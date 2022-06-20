@@ -9,7 +9,7 @@ class Lyrics(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def lyrics(self, ctx, song: Union[str, discord.User]):
+    async def lyrics(self, ctx, *, song: str):
         ses = aiohttp.ClientSession()
         song = song.replace(" ", "%20")
         async with ses.get(
