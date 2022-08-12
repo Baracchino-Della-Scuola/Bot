@@ -154,7 +154,6 @@ class Events(commands.Cog):
             if settings["autopublishing"] == "True":
 
                 await message.publish()
-        
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
