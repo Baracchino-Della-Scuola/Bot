@@ -1,4 +1,9 @@
-import discord, urllib, jishaku, os, traceback, dotenv
+import discord
+import urllib
+import jishaku
+import os
+import traceback
+import dotenv
 from discord.ext import commands
 import random
 from discord.ext import commands
@@ -6,8 +11,6 @@ from discord.ext import commands
 # from pretty_help import DefaultMenu, PrettyHelp
 import asyncio
 import aiomysql
-from flask import *
-import server
 import psutil
 import subprocess
 
@@ -38,15 +41,19 @@ class Bot(commands.Bot):
         self.db = os.getenv("DB_NAME")
         self.user_name = os.getenv("DB_USER")
         self.password = os.getenv("DB_PASSWORD")
-        self.connection = await aiomysql.connect(
-            autocommit=True,
-            host=self.host,
-            port=int(self.port),
-            db=self.db,
-            user=self.user_name,
-            password=self.password,
-        )
-        print("Connected to MySQL")
+        try:
+            self.connection = await aiomysql.connect(
+                autocommit=True,
+                host=self.host,
+                port=int(self.port),
+                db=self.db,
+                user=self.user_name,
+                password=self.password,
+            )
+            print("Connected to MySQL")
+        except:
+            print("No sql for you, sorry")
+
         for a in os.listdir("./cogs"):
 
             try:

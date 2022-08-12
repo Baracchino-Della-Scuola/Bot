@@ -66,5 +66,5 @@ class Birthdays(commands.Cog):
         print(r.text)
 
 
-def setup(bot):
-    bot.add_cog(Birthdays(bot))
+async def setup(bot):
+    await bot.add_cog(Birthdays(bot))
