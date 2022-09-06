@@ -45,8 +45,6 @@ class RssNews(commands.Cog):
             print("closing...")
             fil.close()
 
-            # print(json.dumps(feed.entries[0]))
-            # print(entry["links"][1]["href"])
             emb.set_author(name=entry["author_detail"]["name"])
             emb.set_footer(text="Published at: " + entry["published"])
             emb.set_thumbnail(url=entry["links"][1]["href"])
