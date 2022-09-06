@@ -53,7 +53,7 @@ class Dance(commands.Cog):
 
         query = "tts"
 
-        if not ".mp3" in query:
+        if ".mp3" not in query:
             query += ".mp3"
 
         v = ctx.voice_client
