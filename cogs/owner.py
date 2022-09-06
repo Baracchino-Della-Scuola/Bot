@@ -22,7 +22,7 @@ class Owner(commands.Cog, command_attrs=dict(hidden=True)):
         emb = discord.Embed(
             title="Loaded cogs",
             description=":white_check_mark: :: "
-            + "\n:white_check_mark: :: ".join([x for x in self.bot.extensions]),
+            + "\n:white_check_mark: :: ".join(list(self.bot.extensions)),
         )
         await ctx.send(embed=emb)
 
