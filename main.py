@@ -8,7 +8,6 @@ from discord.ext import commands
 import random
 from discord.ext import commands
 
-# from pretty_help import DefaultMenu, PrettyHelp
 import asyncio
 import aiomysql
 import psutil
