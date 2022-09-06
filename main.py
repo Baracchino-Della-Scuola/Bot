@@ -6,7 +6,6 @@ import traceback
 import dotenv
 from discord.ext import commands
 import random
-from discord.ext import commands
 
 import asyncio
 import aiomysql

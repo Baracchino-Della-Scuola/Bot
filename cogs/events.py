@@ -5,7 +5,6 @@ from discord.utils import get
 from datetime import datetime
 import requests, random, os
 from io import BytesIO
-import json
 
 
 class Events(commands.Cog):
