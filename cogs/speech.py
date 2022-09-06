@@ -28,7 +28,6 @@ class Speech(commands.Cog):
     @commands.command(aliases=["tts"])
     async def text_to_speech(self, ctx, *, message):
         "Transform a text to a speech!"
-
         temp = TemporaryFile()
         await self.tts.write_to_fp(fp=temp, text=message, lang="it")
         temp.seek(0)

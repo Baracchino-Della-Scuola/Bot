@@ -10,7 +10,6 @@ class Owner(commands.Cog, command_attrs=dict(hidden=True)):
 
     def cleanup_code(self, content):
         """Automatically removes code blocks from the code."""
-
         if content.startswith("```") and content.endswith("```"):
             return "\n".join(content.split("\n")[1:-1])
 
@@ -31,7 +30,6 @@ class Owner(commands.Cog, command_attrs=dict(hidden=True)):
     @commands.is_owner()
     async def _eval(self, ctx, *, body: str):
         """Evaluates a code"""
-
         env = {
             "bot": self.bot,
             "ctx": ctx,
