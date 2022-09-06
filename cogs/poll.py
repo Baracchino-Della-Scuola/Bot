@@ -45,8 +45,8 @@ class Poll(commands.Cog):
             print(quests)
             if len(quests) > 9:
                 return await ctx.send("You added too much choices! Bruh...")
-            for a in range(len(quests)):
-                emb.add_field(name="Choice", value=f":{numbers[a]}: : {quests[a]}")
+            for a, item in enumerate(quests):
+                emb.add_field(name="Choice", value=f":{numbers[a]}: : {item}")
         else:
             quests = [1, 2]
             reacts = ["\U0001f44d", "\U0001f44e"]
