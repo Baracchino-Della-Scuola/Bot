@@ -1,6 +1,4 @@
-"""
-Q&A functions for the discord bot
-"""
+"""Q&A functions for the discord bot"""
 
 import discord
 from discord.ext import commands
