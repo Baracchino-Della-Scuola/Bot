@@ -13,6 +13,6 @@
 - Clone the repo
 - Open a terminal in it
 - Do "pip3 intall youtube-dl git+https://github.com/iDevision/enhanced-discord.py aiomysqljishaku"
-- Copy .env.example in .env nd complie the values
+- Copy .env.example in .env and complie the values
 - python3 main.py
 - Done!
