@@ -5,7 +5,6 @@ import requests
 from typing import *
 from petpetgif import petpet as petpetgif
 import aiohttp, random, json
-import random
 import pyfiglet
 
 

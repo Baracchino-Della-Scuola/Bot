@@ -10,7 +10,6 @@ class Owner(commands.Cog, command_attrs=dict(hidden=True)):
 
     def cleanup_code(self, content):
         """Automatically removes code blocks from the code."""
-
         if content.startswith("```") and content.endswith("```"):
             return "\n".join(content.split("\n")[1:-1])
 
@@ -23,7 +22,7 @@ class Owner(commands.Cog, command_attrs=dict(hidden=True)):
         emb = discord.Embed(
             title="Loaded cogs",
             description=":white_check_mark: :: "
-            + "\n:white_check_mark: :: ".join([x for x in self.bot.extensions]),
+            + "\n:white_check_mark: :: ".join(list(self.bot.extensions)),
         )
         await ctx.send(embed=emb)
 
@@ -31,7 +30,6 @@ class Owner(commands.Cog, command_attrs=dict(hidden=True)):
     @commands.is_owner()
     async def _eval(self, ctx, *, body: str):
         """Evaluates a code"""
-
         env = {
             "bot": self.bot,
             "ctx": ctx,

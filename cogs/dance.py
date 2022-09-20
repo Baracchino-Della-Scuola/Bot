@@ -20,7 +20,6 @@ class Dance(commands.Cog):
     @commands.command()
     async def djoin(self, ctx, *, channel: discord.VoiceChannel):
         """Joins a voice channel where I can DANCE"""
-
         if ctx.voice_client is not None:
             return await ctx.voice_client.move_to(channel)
 
@@ -29,7 +28,6 @@ class Dance(commands.Cog):
     @commands.command()
     async def dance(self, ctx):
         """DANCE DANCE DANCE"""
-
         if ctx.voice_client is None:
             if ctx.author.voice:
                 await ctx.author.voice.channel.connect()
@@ -55,7 +53,7 @@ class Dance(commands.Cog):
 
         query = "tts"
 
-        if not ".mp3" in query:
+        if ".mp3" not in query:
             query += ".mp3"
 
         v = ctx.voice_client
@@ -71,7 +69,6 @@ class Dance(commands.Cog):
     @commands.command()
     async def dvolume(self, ctx, volume: int):
         """Changes the DANCE's volume"""
-
         if ctx.voice_client is None:
             return await ctx.send("Not connected to a voice channel.")
 
@@ -86,7 +83,6 @@ class Dance(commands.Cog):
     @commands.command()
     async def dstop(self, ctx):
         """Stop dancing"""
-
         if ctx.voice_client is None:
             emb = discord.Embed(
                 description="I'm not dancing!", colour=discord.Colour.red()
