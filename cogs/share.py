@@ -47,11 +47,10 @@ class Share(commands.Cog):
         file = ctx.message.attachments[0]
         c = self.bot.get_channel(int(838728591238758411))
 
-        cur = await self.connection.cursor()
-        await cur.execute(
-            f"INSERT into files (name, url) VALUES ('{file.filename}', '{file.url}')"
-        )
-        await self.connection.commit()
+        f = open("data/files/" + file.filename, "wb")
+        r = requests.get(file.url)
+        f.write(r.content)
+        f.close()
 
         await ctx.send(f"File {file.filename} has been saved in our database!")
 
@@ -65,14 +64,11 @@ class Share(commands.Cog):
         description="Download a file",
     )
     async def download(self, ctx, filename):
-        cur = await self.connection.cursor()
 
-        try:
-            await cur.execute("SELECT * from files where name = '" + filename + "'")
-            r = await cur.fetchall()
-            await ctx.author.send(r[0][1])
+        if os.path.exists("data/" + filename):
+            await ctx.author.send(file=discord.File("data/files/" + filename))
 
-        except:
+        else:
 
             await ctx.send("File not found. Try with a different file")
             await self.staff_chat.send(
@@ -131,13 +127,7 @@ class Share(commands.Cog):
         description="List all files stored with us",
     )
     async def list(self, ctx):
-        cur = await self.connection.cursor()
-        await cur.execute("SELECT * from files")
-        r = await cur.fetchall()
-        total = ""
-        for a in r:
-            total += a[0] + "\n"
-
+        total = "\n".join(os.listdir("data/files/"))
         emb = discord.Embed(
             title="Files", description=total, color=discord.Color.blue()
         )
@@ -170,9 +160,7 @@ class Share(commands.Cog):
 
         c = self.bot.get_channel(int(838728591238758411))
 
-        cur = await self.bot.connection.cursor()
-        await cur.execute("DELETE FROM files WHERE name = '" + filename + "'")
-        await ctx.send(f"File {filename} has been deleted.")
+        os.remove("data/files/" + filename)
         await c.send(
             f"File {filename} no longer exists. Say thanks to {ctx.author.mention}!"
         )
@@ -232,8 +220,7 @@ class Share(commands.Cog):
 
         c = self.bot.get_channel(int(838728591238758411))
 
-        cur = await self.bot.connection.cursor()
-        await cur.execute(f"UPDATE files SET name='{newname}' where name='{filename}'")
+        os.rename("data/files/"+filename, "data/files/"+newname)
         await c.send(f"Now you can download {filename} with .download {newname}")
         await ctx.send(f"File {filename} has been renamed to {newname}.")
         await c.send(f"{ctx.author.mention} renamed {filename} to {newname}.")
