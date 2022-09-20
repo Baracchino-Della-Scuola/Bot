@@ -220,7 +220,7 @@ class Share(commands.Cog):
 
         c = self.bot.get_channel(int(838728591238758411))
 
-        os.rename("data/files/"+filename, "data/files/"+newname)
+        os.rename("data/files/" + filename, "data/files/" + newname)
         await c.send(f"Now you can download {filename} with .download {newname}")
         await ctx.send(f"File {filename} has been renamed to {newname}.")
         await c.send(f"{ctx.author.mention} renamed {filename} to {newname}.")
