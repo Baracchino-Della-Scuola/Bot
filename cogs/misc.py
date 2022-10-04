@@ -13,14 +13,14 @@ class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-        
     @commands.command(name="cat")
     @commands.cooldown(rate=2, per=6, type=commands.BucketType.member)
     async def cat(self, ctx):
         async with aiohttp.ClientSession() as cs:
             async with cs.get("https://aws.random.cat/meow") as res:
-                await ctx.send((await res.json())['file'])
+                await ctx.send((await res.json())["file"])
             await cs.close()
+
     @commands.command(name="pat", aliases=["pet"])
     @commands.cooldown(rate=2, per=5, type=commands.BucketType.member)
     async def pet(self, ctx, image: discord.Member = None):
