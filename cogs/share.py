@@ -68,7 +68,6 @@ class Share(commands.Cog):
             await ctx.author.send(file=discord.File("data/files/" + filename))
 
         else:
-            
 
             await ctx.send("File not found. Try with a different file")
             await self.staff_chat.send(
