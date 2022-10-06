@@ -64,11 +64,11 @@ class Share(commands.Cog):
         description="Download a file",
     )
     async def download(self, ctx, filename):
-
-        if os.path.exists("data/" + filename):
+        if os.path.exists("data/files/" + filename):
             await ctx.author.send(file=discord.File("data/files/" + filename))
 
         else:
+            
 
             await ctx.send("File not found. Try with a different file")
             await self.staff_chat.send(
