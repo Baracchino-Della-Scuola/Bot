@@ -9,6 +9,13 @@
 - Welcome
 - Reaction Roles
 - Misc commands
+  - Cats
+  - ascii
+  - emergency
+  - jail
+  - passed
+  - pat
+  - other stuff
 
 ## Hosting
 - Clone the repo
