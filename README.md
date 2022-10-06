@@ -1,5 +1,6 @@
 # Bot
 ## Features
+- Cat pictures sending (not pushed for now, idk why)
 - Calculator
 - Music
 - Moderation
