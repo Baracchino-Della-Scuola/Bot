@@ -1,4 +1,3 @@
-import discord
 import requests, os
 from discord.ext import commands
 from datetime import datetime

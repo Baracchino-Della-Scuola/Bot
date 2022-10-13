@@ -1,4 +1,4 @@
-import discord, feedparser, json, random
+import discord, feedparser, json
 from discord.ext import commands, tasks
 
 

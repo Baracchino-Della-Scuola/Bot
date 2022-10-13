@@ -1,9 +1,6 @@
 import discord
 from discord.ext import commands
 import urllib.parse
-from .constants import themes, controls, languages, fonts, escales
-import os
-from pathlib import Path
 from typing import Any
 
 from io import *

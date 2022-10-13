@@ -1,13 +1,10 @@
 import discord
 from discord.ext import commands
-from discord.gateway import DiscordWebSocket
 import requests, os
 import json
 import subprocess
-import io
 import random
 import dotenv
-import aiomysql
 
 
 class Share(commands.Cog):
