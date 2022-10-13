@@ -1,4 +1,4 @@
-import requests, time, sys
+import requests, time
 
 webhook_url = "https://discord.com/api/webhooks/944193369444335636/5aHibosUOR_ZyD845oIga4wi21SCvBumUtPIrDvV1IhpMqA3vadyQgKZYi0WMZO0XGAV"
 sleep_time = 0.25

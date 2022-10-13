@@ -1,4 +1,4 @@
-import discord, textwrap, traceback, io, subprocess
+import discord, textwrap, traceback, io
 from discord.ext import commands
 from contextlib import redirect_stdout
 

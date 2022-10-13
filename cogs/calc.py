@@ -1,7 +1,6 @@
 import ast
 from discord.ext import commands
 from math import *
-import re
 import functools
 
 

@@ -6,11 +6,7 @@ import traceback
 import dotenv
 from discord.ext import commands
 import random
-
-import asyncio
 import aiomysql
-import psutil
-import subprocess
 
 dotenv.load_dotenv(dotenv_path=".env")
 

@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands
 from io import BytesIO
-import aiohttp
-import traceback
 from aiogtts import aiogTTS
 import functools
 from tempfile import TemporaryFile
