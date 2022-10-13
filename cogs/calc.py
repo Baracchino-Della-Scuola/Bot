@@ -1,3 +1,4 @@
+import ast
 from discord.ext import commands
 from math import *
 import re
@@ -6,7 +7,7 @@ import functools
 
 def get_math(mat):
     """Retrieve results from python"""
-    return eval(mat)
+    return ast.literal_eval(mat)
 
 
 class Calculator(commands.Cog):
