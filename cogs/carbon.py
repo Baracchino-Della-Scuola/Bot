@@ -26,7 +26,7 @@ def hex_to_rgb(hex: str) -> tuple:
 def parse_bg(background) -> str:
     if background == "":
         return "rgba(171, 184, 195, 1)"
-    elif background[0] == "#" or "(" not in background:
+    if background[0] == "#" or "(" not in background:
         return f"rgba{hex_to_rgb(background) + (1,)}"
     return background
 
