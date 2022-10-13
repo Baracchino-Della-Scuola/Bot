@@ -98,9 +98,8 @@ class Dance(commands.Cog):
                         colour=discord.Colour.red(),
                     )
                     return await ctx.send(embed=emb)
-                else:
-                    ctx.voice_client.stop()
-                    self.bot.voices.pop(str(ctx.guild.id))
+                ctx.voice_client.stop()
+                self.bot.voices.pop(str(ctx.guild.id))
             except KeyError:
                 ctx.voice_client.stop()
 

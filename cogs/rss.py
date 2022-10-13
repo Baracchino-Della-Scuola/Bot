@@ -31,25 +31,22 @@ class RssNews(commands.Cog):
             fil.write(json.dumps(self.articles))
             fil.close()
             return
-        else:
-            print("oof")
+        print("oof")
 
-            emb = discord.Embed(
-                title=feed.entries[0]["title"], url=feed.entries[0]["link"]
-            )
-            ch = self.bot.get_channel(946354506214539315)
+        emb = discord.Embed(title=feed.entries[0]["title"], url=feed.entries[0]["link"])
+        ch = self.bot.get_channel(946354506214539315)
 
-            self.articles.append(entry["title"])
+        self.articles.append(entry["title"])
 
-            fil.write(json.dumps(self.articles))
-            print("closing...")
-            fil.close()
+        fil.write(json.dumps(self.articles))
+        print("closing...")
+        fil.close()
 
-            emb.set_author(name=entry["author_detail"]["name"])
-            emb.set_footer(text="Published at: " + entry["published"])
-            emb.set_thumbnail(url=entry["links"][1]["href"])
+        emb.set_author(name=entry["author_detail"]["name"])
+        emb.set_footer(text="Published at: " + entry["published"])
+        emb.set_thumbnail(url=entry["links"][1]["href"])
 
-            await ch.send(embed=emb)
+        await ch.send(embed=emb)
 
     @tasks.loop(minutes=1)
     async def send_announcements_corriere(self):
