@@ -33,9 +33,7 @@ class RssNews(commands.Cog):
             return
         print("oof")
 
-        emb = discord.Embed(
-            title=feed.entries[0]["title"], url=feed.entries[0]["link"]
-        )
+        emb = discord.Embed(title=feed.entries[0]["title"], url=feed.entries[0]["link"])
         ch = self.bot.get_channel(946354506214539315)
 
         self.articles.append(entry["title"])
