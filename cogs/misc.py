@@ -6,7 +6,6 @@ from typing import *
 from petpetgif import petpet as petpetgif
 import aiohttp, random, json
 import pyfiglet
-import aiohttp
 
 
 class Misc(commands.Cog):
