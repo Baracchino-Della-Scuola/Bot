@@ -18,3 +18,4 @@ PyMySQL==0.9.3
 python-dotenv==0.20.0
 requests==2.27.1
 youtube-dl==2021.12.17
+wheel>=0.38.0 # not directly required, pinned by Snyk to avoid a vulnerability
