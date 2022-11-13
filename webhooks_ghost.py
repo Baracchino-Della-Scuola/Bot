@@ -1,3 +1,4 @@
+# No longer mantained
 import os, dotenv, json
 from flask import *
 from discord_webhook import DiscordWebhook, DiscordEmbed
