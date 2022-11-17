@@ -12,7 +12,7 @@ git+https://github.com/iDevision/enhanced-discord.py/
 feedparser==6.0.8
 jishaku==2.4.0
 pet-pet-gif==1.0.2
-Pillow==9.1.1
+Pillow==9.2.0
 pyfiglet==0.8.post1
 PyMySQL==0.9.3
 python-dotenv==0.20.0
