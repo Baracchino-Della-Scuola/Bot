@@ -5,7 +5,7 @@ astunparse==1.6.3
 async-timeout==4.0.2
 attrs==21.4.0
 braceexpand==0.1.7
-certifi==2021.10.8
+certifi==2022.12.7
 charset-normalizer==2.0.12
 click==8.1.2
 git+https://github.com/iDevision/enhanced-discord.py/
