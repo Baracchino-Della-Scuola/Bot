@@ -70,7 +70,7 @@ class Bot(commands.Bot):
             activity=discord.Game(
                 name=random.choice(
                     [
-                        "CopyRush 2022",
+                        "CopyRush 2023",
                         "Games at school",
                         "Destroy the school",
                         "Fake the test",
