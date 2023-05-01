@@ -43,7 +43,6 @@ class Errors(commands.Cog):
                 pass
             elif isinstance(error, commands.ArgumentParsingError):
                 if isinstance(error, commands.UnexpectedQuoteError):
-
                     await ctx.send("Invalid quotes!")
                 elif isinstance(error, commands.InvalidEndOfQuotedStringError):
                     await ctx.send("I don't understand this syntax")
@@ -69,7 +68,6 @@ class Errors(commands.Cog):
                 elif isinstance(error, commands.BadInviteArgument):
                     await ctx.send("I am not invited  to that party!")
                 elif isinstance(error, commands.EmojiNotFound):
-
                     await ctx.send("What emoji?")
                 elif isinstance(error, commands.PartialEmojiConversionFailure):
                     await ctx.send("This emoji has too low data")
