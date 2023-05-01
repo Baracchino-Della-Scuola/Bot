@@ -10,7 +10,6 @@ app = Flask("ghosthooks")
 
 @app.route("/receive", methods=["GET", "POST"])
 def receive_hook():
-
     data = json.loads(request.data)
     webhook = DiscordWebhook(url=os.environ["WEBHOOK"])
 

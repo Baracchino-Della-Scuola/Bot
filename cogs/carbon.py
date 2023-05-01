@@ -63,7 +63,6 @@ class Carbon(commands.Cog):
 
     @commands.command()
     async def carbonate(self, ctx, *, code):
-
         carbon_url = code_to_url(code)
         r = requests.get(carbon_url)
 

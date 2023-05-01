@@ -14,7 +14,6 @@ class Tags(commands.Cog):
         description="List tags",
     )
     async def tag(self, ctx, name=None):
-
         cur = await self.con.cursor()
 
         tags = ""
@@ -33,7 +32,6 @@ class Tags(commands.Cog):
             await cur.execute(f"SELECT * from tags WHERE name = '{name}'")
             data = await cur.fetchall()
             for a in data:
-
                 emb = discord.Embed(
                     title=f"Tag {name}",
                     description=a[1],
