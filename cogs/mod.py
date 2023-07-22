@@ -38,7 +38,6 @@ class Moderation(commands.Cog):
 
         print(data)
         for a in data:
-
             if a.endswith("m"):
                 minutes = int(a[:-1])
             if a.endswith("s"):
@@ -105,7 +104,6 @@ class Moderation(commands.Cog):
 
     @commands.command()
     async def purge(self, ctx, limit: int = 2):
-
         await ctx.channel.purge(limit=limit + 1)
         time.sleep(1)
         await ctx.send(f"Deleted {limit} messages", delete_after=2)
