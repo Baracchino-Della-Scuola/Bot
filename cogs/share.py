@@ -65,7 +65,6 @@ class Share(commands.Cog):
             await ctx.author.send(file=discord.File("data/files/" + filename))
 
         else:
-
             await ctx.send("File not found. Try with a different file")
             await self.staff_chat.send(
                 f"{ctx.author.mention} has attempted to download a file that does not exist."
@@ -135,7 +134,6 @@ class Share(commands.Cog):
         for member in (
             self.bot.get_guild(838727867428765766).get_role(884453174839230464).members
         ):
-
             desc += f"{member.mention}\n"
         emb = discord.Embed(title="Staff", description=desc)
         await ctx.send(embed=emb)
