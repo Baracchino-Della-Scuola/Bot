@@ -151,7 +151,6 @@ class Events(commands.Cog):
             settings = json.load(f)
             f.close()
             if settings["autopublishing"] == "True":
-
                 await message.publish()
 
     @commands.Cog.listener()

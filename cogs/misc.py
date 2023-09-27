@@ -23,7 +23,6 @@ class Misc(commands.Cog):
     @commands.command(name="pat", aliases=["pet"])
     @commands.cooldown(rate=2, per=5, type=commands.BucketType.member)
     async def pet(self, ctx, image: discord.Member = None):
-
         if type(image) == discord.member.Member:
             image = await image.avatar.read()  # retrieve the image bytes
         else:
@@ -41,7 +40,6 @@ class Misc(commands.Cog):
     @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def passed(self, ctx, user: discord.User = None):
         if user:
-
             r = requests.get(
                 "https://some-random-api.ml/canvas/passed?avatar=" + user.avatar.url
             )
@@ -58,7 +56,6 @@ class Misc(commands.Cog):
     @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def comunism(self, ctx, user: discord.User = None):
         if user:
-
             r = requests.get(
                 "https://some-random-api.ml/canvas/comrade?avatar=" + user.avatar.url
             )
@@ -75,7 +72,6 @@ class Misc(commands.Cog):
     @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def jail(self, ctx, user: discord.User = None):
         if user:
-
             r = requests.get(
                 "https://some-random-api.ml/canvas/jail?avatar=" + user.avatar.url
             )
@@ -91,7 +87,6 @@ class Misc(commands.Cog):
     @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def rip(self, ctx, user: discord.User = None):
         if user:
-
             r = requests.get("https://vacefron.nl/api/grave?user=" + user.avatar.url)
         else:
             r = requests.get(
@@ -104,7 +99,6 @@ class Misc(commands.Cog):
     @commands.command()
     @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def emergency(self, ctx, text):
-
         r = requests.get(
             "https://vacefron.nl/api/emergencymeeting?text=" + text.replace(" ", "%20")
         )
@@ -167,7 +161,6 @@ class Misc(commands.Cog):
     @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def gay(self, ctx, user: discord.User = None):
         if user:
-
             r = requests.get(
                 "https://some-random-api.ml/canvas/gay?avatar=" + user.avatar.url
             )
@@ -183,7 +176,6 @@ class Misc(commands.Cog):
     @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def wasted(self, ctx, user: discord.User = None):
         if user:
-
             r = requests.get(
                 "https://some-random-api.ml/canvas/wasted?avatar=" + user.avatar.url
             )
@@ -200,7 +192,6 @@ class Misc(commands.Cog):
     @commands.cooldown(rate=1, per=5, type=commands.BucketType.member)
     async def triggered(self, ctx, user: discord.User = None):
         if user:
-
             r = requests.get(
                 "https://some-random-api.ml/canvas/triggered?avatar=" + user.avatar.url
             )
