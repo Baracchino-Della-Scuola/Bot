@@ -18,7 +18,6 @@ class Owner(commands.Cog, command_attrs=dict(hidden=True)):
     @commands.command()
     @commands.is_owner()
     async def cogs(self, ctx):
-
         emb = discord.Embed(
             title="Loaded cogs",
             description=":white_check_mark: :: "
