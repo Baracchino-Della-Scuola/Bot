@@ -16,6 +16,6 @@ Pillow==10.0.1
 pyfiglet==0.8.post1
 PyMySQL==0.9.3
 python-dotenv==0.20.0
-requests==2.27.1
+requests==2.31.0
 youtube-dl==2021.12.17
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
