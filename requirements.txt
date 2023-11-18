@@ -1,20 +1,22 @@
-aiohttp==3.8.1
+aiohttp==3.8.6
 aiomysql==0.0.22
 aiosignal==1.2.0
 astunparse==1.6.3
 async-timeout==4.0.2
 attrs==21.4.0
 braceexpand==0.1.7
-certifi==2021.10.8
+certifi==2023.7.22
 charset-normalizer==2.0.12
 click==8.1.2
 git+https://github.com/iDevision/enhanced-discord.py/
 feedparser==6.0.8
 jishaku==2.4.0
 pet-pet-gif==1.0.2
-Pillow==9.2.0
+Pillow==10.0.1
 pyfiglet==0.8.post1
 PyMySQL==0.9.3
 python-dotenv==0.20.0
-requests==2.27.1
+requests==2.31.0
 youtube-dl==2021.12.17
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
+wheel>=0.38.0 # not directly required, pinned by Snyk to avoid a vulnerability

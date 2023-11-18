@@ -25,7 +25,6 @@ class Bot(commands.Bot):
         ending_note = f"(C) 2022 Il BaracchinoDella Scuola"
 
     async def on_ready(self):
-
         print("Running. Printing wd")
         os.system("pwd")
         self.staff_chat = self.get_channel(907937553343209472)
@@ -49,10 +48,8 @@ class Bot(commands.Bot):
             print("No sql for you, sorry")
 
         for a in os.listdir("./cogs"):
-
             try:
                 if a.endswith(".py"):
-
                     await self.load_extension("cogs." + a[:-3])
                     print(f"Loading {a[:-3]}.py")
 
@@ -70,7 +67,7 @@ class Bot(commands.Bot):
             activity=discord.Game(
                 name=random.choice(
                     [
-                        "CopyRush 2022",
+                        "CopyRush 2023",
                         "Games at school",
                         "Destroy the school",
                         "Fake the test",

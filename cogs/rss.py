@@ -14,20 +14,17 @@ class RssNews(commands.Cog):
         self.send_announcements_corriere.start()
 
     def cog_unload(self):
-
         self.send_announcements_corriere.cancel()
         self.send_announcements.cancel()
 
     @tasks.loop(minutes=1)
     async def send_announcements(self):
-
         fil = open("articles.json", "w")
         feed = feedparser.parse(self.rss_url)
 
         entry = feed.entries[0]
 
         if entry["title"] in self.articles:
-
             fil.write(json.dumps(self.articles))
             fil.close()
             return
@@ -50,7 +47,6 @@ class RssNews(commands.Cog):
 
     @tasks.loop(minutes=1)
     async def send_announcements_corriere(self):
-
         corriere = feedparser.parse(self.corriere_url)
         cor = corriere.entries[0]
         print("a")
